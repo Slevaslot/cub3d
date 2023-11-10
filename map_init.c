@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:37 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/10 17:39:42 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/10 18:45:11 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	check_map(t_data *data)
 	while (data->map[++i])
 	{
 		j = -1;
+		if (i == 0)
+		{}
 		while(data->map[i][++j])
 		{
 			if (data->map[i][j] != ' ' && data->map[i][j] != 'N')
@@ -47,7 +49,7 @@ int	check_map(t_data *data)
 			if (data->map[i][j] == 'N')
 			{
 				if (data->map[i][++j] && data->map[i][j] == 'O')
-					data->ntex = ft_strtrim(&map[i][++j], " ");
+					data->ntex = ft_strtrim(&data->map[i][++j], " ");
 			}
 		}
 	}
@@ -56,19 +58,17 @@ int	check_map(t_data *data)
 
 int	map_fill(t_data *data, int fd)
 {
-	int		i;
 	char	*str;
 
-	i = 0;
 	str = get_map(fd);
 	data->map = ft_split(str, '\n');
 	if (!data->map)
 		return (1);
-	if (check_map(data))
-	{
-		close(fd);
-		return (free(str), 1);
-	}
+	// if (check_map(data))
+	// {
+	// 	close(fd);
+	// 	return (free(str), 1);
+	// }
 	close(fd);
 	free(str);
 	return (0);
