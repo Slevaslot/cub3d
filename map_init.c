@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:37 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/08 19:48:17 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:39:42 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,29 @@ char	*get_map(int fd)
 	return (str);
 }
 
+int	check_map(t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (data->map[++i])
+	{
+		j = -1;
+		while(data->map[i][++j])
+		{
+			if (data->map[i][j] != ' ' && data->map[i][j] != 'N')
+				return (1);
+			if (data->map[i][j] == 'N')
+			{
+				if (data->map[i][++j] && data->map[i][j] == 'O')
+					data->ntex = ft_strtrim(&map[i][++j], " ");
+			}
+		}
+	}
+	return (0);
+}
+
 int	map_fill(t_data *data, int fd)
 {
 	int		i;
@@ -38,19 +61,16 @@ int	map_fill(t_data *data, int fd)
 
 	i = 0;
 	str = get_map(fd);
-	while (str[++i])
-	{
-		if (str[0] == '\n' || (str[i] == '\n' && str[i - 1] == '\n'))
-		{
-			close(fd);
-			return (free(str), 1);
-		}
-	}
 	data->map = ft_split(str, '\n');
+	if (!data->map)
+		return (1);
+	if (check_map(data))
+	{
+		close(fd);
+		return (free(str), 1);
+	}
 	close(fd);
 	free(str);
-	if (!data->map)
-		return (free(data->map), 1);
 	return (0);
 }
 
@@ -59,8 +79,9 @@ void	map_init(t_data *data, char *map_name)
 	int	fd;
 
 	fd = open(map_name, O_RDONLY);
-	// Check le nom de la map et si elle existe
+	if (fd < 1)
+		close_error("File does not exist\n", data);
 	// Mettre les textures et couleur dans Data
 	if (map_fill(data, fd))
-		close_error(1);
+		close_error("Map is wrong\n", data);
 }

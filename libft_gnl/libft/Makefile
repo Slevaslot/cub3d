@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pdosso-d <pdosso-d@student.42.fr>          +#+  +:+       +#+         #
+#    By: aproust <aproust@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 11:16:18 by pdosso-d          #+#    #+#              #
-#    Updated: 2023/01/18 17:28:51 by pdosso-d         ###   ########.fr        #
+#    Updated: 2023/11/10 15:49:02 by aproust          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS =	ft_atoi.c \
 		ft_substr.c \
 		ft_tolower.c \
 		ft_toupper.c \
+		ft_freetab.c \
 
 OBJS = ${SRCS:.c=.o}
 

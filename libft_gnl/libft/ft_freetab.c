@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_freetab.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 19:37:28 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/10 16:15:04 by aproust          ###   ########.fr       */
+/*   Created: 2023/03/24 16:41:17 by aproust           #+#    #+#             */
+/*   Updated: 2023/11/10 15:48:45 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-int	close_error(char *err_message, t_data *data)
-{
-	free_all(data);
-	printf("Error : %s", err_message);
-	exit(2);
-}
-
-void map_print(char **str)
+void	free_tab(char **str)
 {
 	int	i;
 
 	i = -1;
+	if (!str)
+		return ;
 	while (str[++i])
-		dprintf(2, "%s\n", str[i]);
-}
-
-void	free_all(t_data *data)
-{
-	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	mlx_destroy_display(data->mlx_ptr);
-	free_tab(data->map);
-	free(data->mlx_ptr);
+		free(str[i]);
+	free(str);
+	str = 0;
 }
