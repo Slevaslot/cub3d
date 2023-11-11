@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/10 16:29:56 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/11 17:52:34 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	start_program(char *map_name, t_data *data)
 {
-	if (!(data->mlx_ptr = mlx_init()))
+	data->mlx_ptr = mlx_init();
+	if (!data->mlx_ptr)
 		return (-1);
 	data->win_ptr = mlx_new_window(data->mlx_ptr, 1000, 1000, "maps name :");
 	map_init(data, map_name);
@@ -22,7 +23,7 @@ int	start_program(char *map_name, t_data *data)
 	return (1);
 }
 
-int	exit_all()
+int	exit_all(void)
 {
 	exit(0);
 }
@@ -40,15 +41,18 @@ int	check_arg(char *av)
 	return (printf("Error : Invalid file format\n"), 1);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_data data;
+	t_data	data;
 
 	if (ac == 2)
 	{
 		if (check_arg(av[1]))
 			return (1);
 		data.map = 0;
+		data.textures = ft_calloc(sizeof(char *), 7);
+		if (!data.textures)
+			return (1);
 		if (start_program(av[1], &data) < 0)
 			return (exit_all());
 		mlx_key_hook(data.win_ptr, del_key, &data);

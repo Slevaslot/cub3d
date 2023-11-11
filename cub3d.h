@@ -15,14 +15,8 @@ typedef struct t_data
 	void	*win_ptr;
 	int		*mlx_img;
 	char	**map;
-	char	*ntex;
-	char	*wtex;
-	char	*etex;
-	char	*stex;
-	char	*f_color;
-	char	*c_color;
-
-}t_data;
+	char	**textures;
+} t_data;
 
 /* close key */
 
@@ -32,5 +26,10 @@ int		del_key(int key, t_data *data);
 void	map_init(t_data *data, char *map_name);
 void	free_all(t_data *data);
 void	map_print(char **str);
+int		parse_for_texture(t_data *data, char c, int i, int j);
+int		parse_for_texture2(t_data *data, int i, int j);
+int		parse_for_texture3(t_data *data, int i, int j);
+int		get_floor_color(t_data *data, int i, int j);
+int		get_ceiling_color(t_data *data, int i, int j);
 
 #endif

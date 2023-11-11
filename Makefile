@@ -1,5 +1,9 @@
 PROG	= cub3d
-SRCS 	= main.c key.c utils.c map_init.c\
+SRCS 	= main.c \
+		  key.c \
+		  utils.c \
+		  map_init.c \
+		  parsing.c \
 
 OBJS 	= $(addprefix obj/,${SRCS:.c=.o} ${SRCS_LIBFT:.c=.o})
 LIBS = minilibx-linux/libmlx_Linux.a libft_gnl/libft_gnl.a -lXext -lX11 -lm
