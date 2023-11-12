@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:37 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/11 17:49:35 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/12 16:29:10 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,43 @@ char	*get_map(int fd)
 	return (str);
 }
 
-int	check_map(t_data *data)
+int	parse_map(char *str)
+{
+	int	i;
+	int	check;
+
+	i = -1;
+	check = 0;
+	while (str[++i])
+	{
+		if (check == 1 && str[i] == '\n')
+			return (1);
+		while (str[i++] && str[i] != '\n')
+		{
+			if (str[i] != '0' && str[i] != '1' && str[i] != 'W' && str[i] != 'N'
+				&& str[i] != 'S' && str[i] != 'E' && str[i] != ' ')
+			{
+				while (str[++i] && str[i] != '\n')
+					;
+				check = 0;
+				break ;
+			}
+			else
+				check = 1;
+		}
+	}
+	return (0);
+}
+
+int	parse_file(t_data *data)
 {
 	int	i;
 	int	j;
 
 	i = -1;
-	while (data->map[++i])
+	while (data->map[i + 1] && i < 5)
 	{
+		i++;
 		j = -1;
 		if (i == 0)
 		{
@@ -71,6 +100,8 @@ int	check_map(t_data *data)
 				return (1);
 		}
 	}
+	if (check_map(&data->map[i + 1]))
+		return (1);
 	return (0);
 }
 
@@ -79,10 +110,14 @@ int	map_fill(t_data *data, int fd)
 	char	*str;
 
 	str = get_map(fd);
+	if (!str)
+		return (1);
+	if (parse_map(str))
+		return (free(str), 1);
 	data->map = ft_split(str, '\n');
 	if (!data->map)
 		return (1);
-	if (check_map(data))
+	if (parse_file(data))
 	{
 		close(fd);
 		return (free(str), 1);

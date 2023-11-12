@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:37:28 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/11 17:24:34 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/12 14:27:30 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	close_error(char *err_message, t_data *data)
 	exit(2);
 }
 
-void map_print(char **str)
+void	map_print(char **str)
 {
 	int	i;
 

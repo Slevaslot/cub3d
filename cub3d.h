@@ -31,5 +31,6 @@ int		parse_for_texture2(t_data *data, int i, int j);
 int		parse_for_texture3(t_data *data, int i, int j);
 int		get_floor_color(t_data *data, int i, int j);
 int		get_ceiling_color(t_data *data, int i, int j);
+int		check_map(char **map);
 
 #endif

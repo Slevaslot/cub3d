@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 17:28:05 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/11 17:40:04 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/12 14:27:06 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	get_floor_color(t_data *data, int i, int j)
 {
-	while(data->map[i][++j])
+	while (data->map[i][++j])
 	{
 		if (data->map[i][j] != ' ' && data->map[i][j] != 'F')
 			return (1);
@@ -32,7 +32,7 @@ int	get_floor_color(t_data *data, int i, int j)
 
 int	get_ceiling_color(t_data *data, int i, int j)
 {
-	while(data->map[i][++j])
+	while (data->map[i][++j])
 	{
 		if (data->map[i][j] != ' ' && data->map[i][j] != 'C')
 			return (1);
@@ -50,7 +50,7 @@ int	get_ceiling_color(t_data *data, int i, int j)
 
 int	parse_for_texture3(t_data *data, int i, int j)
 {
-	while(data->map[i][++j])
+	while (data->map[i][++j])
 	{
 		if (data->map[i][j] != ' ' && data->map[i][j] != 'E')
 			return (1);
@@ -69,7 +69,7 @@ int	parse_for_texture3(t_data *data, int i, int j)
 
 int	parse_for_texture2(t_data *data, int i, int j)
 {
-	while(data->map[i][++j])
+	while (data->map[i][++j])
 	{
 		if (data->map[i][j] != ' ' && data->map[i][j] != 'W')
 			return (1);
@@ -88,12 +88,12 @@ int	parse_for_texture2(t_data *data, int i, int j)
 
 int	parse_for_texture(t_data *data, char c, int i, int j)
 {
-	char c2;
+	char	c2;
 
 	if (c == 'N' || c == 'S')
 	{
 		c2 = 'O';
-		while(data->map[i][++j])
+		while (data->map[i][++j])
 		{
 			if (data->map[i][j] != ' ' && data->map[i][j] != c)
 				return (1);
