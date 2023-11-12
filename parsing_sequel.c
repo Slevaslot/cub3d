@@ -6,13 +6,21 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 14:40:03 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/12 16:36:36 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/12 17:26:26 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	check_map(char **map)
+int z(char c)
+{
+	if (c == '0' || c == 'W' || c == 'E' || c == 'N' || c == 'S')
+		return (1);
+	else
+		return (0);
+}
+
+int	check_map(char **mp)
 {
 	int	i;
 	int	j;
@@ -20,19 +28,32 @@ int	check_map(char **map)
 
 	counter = 0;
 	j = -1;
-	while (map[++j])
+	while (mp[++j])
 	{
 		i = -1;
-		while (map[j][++i])
+		while (mp[j][++i])
 		{
-			// if ((map[j][i] == '0' && j != 0 && i != 0) && map[j][i])
-			if (map[j][i] != '1' && map[j][i] != '0' && map[j][i] != 'W'
-				&& map[j][i] != 'E' && map[j][i] != 'N' && map[j][i] != 'S'
-				&& map[j][i] != ' ')
+			if (mp[j][i] == '1' || mp[j][i] == ' ')
+				;
+			else if (z(mp[j][i]) && (mp[j][i - 1] && (mp[j][i - 1] ==  '1'
+				|| z(mp[j][i - 1])) && (mp[j][i + 1]) && (mp[j][i + 1] ==  '1'
+				|| z(mp[j][i + 1])) && (mp[j - 1][i]) && (mp[j - 1][i] ==  '1'
+				|| z(mp[j - 1][i])) && (mp[j + 1][i]) && (mp[j + 1][i] ==  '1'
+				|| z(mp[j + 1][i])) && (mp[j + 1][i + 1])
+				&& (mp[j + 1][i + 1] ==  '1' || z(mp[j + 1][i + 1]))
+				&& (mp[j - 1][i - 1]) && (mp[j - 1][i - 1] ==  '1'
+				|| z(mp[j - 1][i - 1]))))
+			{
+				if (mp[j][i] != '1' && mp[j][i] != '0' && mp[j][i] != 'W'
+					&& mp[j][i] != 'E' && mp[j][i] != 'N' && mp[j][i] != 'S'
+					&& mp[j][i] != ' ')
+					return (1);
+				if (mp[j][i] == 'E' || mp[j][i] == 'N'|| mp[j][i] == 'W'
+					|| mp[j][i] == 'S')
+					counter++;
+			}
+			else
 				return (1);
-			if (map[j][i] == 'E' || map[j][i] == 'N'|| map[j][i] == 'W'
-				|| map[j][i] == 'S')
-				counter++;
 		}
 	}
 	if (counter != 1)

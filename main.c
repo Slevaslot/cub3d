@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/11 17:52:34 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/12 17:33:36 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	start_program(char *map_name, t_data *data)
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		return (-1);
-	data->win_ptr = mlx_new_window(data->mlx_ptr, 1000, 1000, "maps name :");
+	data->win_ptr = mlx_new_window(data->mlx_ptr, 1920, 1080, "Cub3d");
 	map_init(data, map_name);
 	map_print(data->map);
 	return (1);
