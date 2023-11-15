@@ -16,6 +16,8 @@ typedef struct t_data
 	int		*mlx_img;
 	char	**map;
 	char	**textures;
+	int		line_legth;
+	char	*map_line;
 } t_data;
 
 /* close key */

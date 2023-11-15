@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/12 17:33:36 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/15 02:27:09 by slevaslo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+
 
 int	start_program(char *map_name, t_data *data)
 {
@@ -27,6 +29,7 @@ int	exit_all(void)
 {
 	exit(0);
 }
+
 
 int	check_arg(char *av)
 {
@@ -59,4 +62,6 @@ int	main(int ac, char **av)
 		mlx_hook(data.win_ptr, 17, 0, close_window, &data);
 		mlx_loop(data.mlx_ptr);
 	}
+	else
+		return (printf("wrong parameter : ./cub3d map.cub\n"), 1);
 }
