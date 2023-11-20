@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_tab_size.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 18:39:49 by pdosso-d          #+#    #+#             */
-/*   Updated: 2023/11/20 16:29:34 by aproust          ###   ########.fr       */
+/*   Created: 2023/06/23 18:22:40 by slevaslo          #+#    #+#             */
+/*   Updated: 2023/10/24 18:29:52 by slevaslo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-size_t	ft_strlen(const char *str)
+int	tab_size(char **str)
 {
-	size_t	i;
+	int	i;
 
-	if (!str)
-		return (0);
-	i = 0;
-	while (str[i])
-		i++;
+	i = -1;
+	while (str[++i])
+		;
 	return (i);
 }
-
-// int main(int argc, char **argv)
-// {
-//     printf("%ld\n", ft_strlen(argv[1]));
-//     printf("%s", argv[1]);
-//     return(0);
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pdosso-d <pdosso-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:37 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/15 02:20:51 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:05:52 by pdosso-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	parse_file(t_data *data)
 	int	j;
 
 	i = -1;
-	while (data->map[i + 1] && i < 5)
+	while (data->file[i + 1] && i < 5)
 	{
 		i++;
 		j = -1;
@@ -100,7 +100,7 @@ int	parse_file(t_data *data)
 				return (1);
 		}
 	}
-	if (check_map(&data->map[i + 1]))
+	if (check_map(data, &data->file[i + 1]))
 		return (1);
 	return (0);
 }
@@ -114,17 +114,14 @@ int	map_fill(t_data *data, int fd)
 		return (1);
 	if (parse_map(str))
 		return (free(str), 1);
-	data->map = ft_split(str, '\n');
-	if (!data->map)
+	data->file = ft_split(str, '\n');
+	if (!data->file)
 		return (1);
 	if (parse_file(data))
 	{
 		close(fd);
 		return (free(str), 1);
 	}
-	int i = -1;
-	while (++i < 6)
-		printf("check: |%s|\n", data->textures[i]);
 	close(fd);
 	free(str);
 	return (0);

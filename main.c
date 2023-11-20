@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/15 02:39:08 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:04:25 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-
 
 int	start_program(char *map_name, t_data *data)
 {
@@ -21,7 +19,7 @@ int	start_program(char *map_name, t_data *data)
 		return (-1);
 	data->win_ptr = mlx_new_window(data->mlx_ptr, 1920, 1080, "Cub3d");
 	map_init(data, map_name);
-	map_print(data->map);
+	map_print(data->file);
 	return (1);
 }
 
@@ -55,7 +53,6 @@ void	draw_minimap(t_data *data)
 	}
 }
 
-
 int	check_arg(char *av)
 {
 	int	i;
@@ -77,6 +74,7 @@ int	main(int ac, char **av)
 	{
 		if (check_arg(av[1]))
 			return (1);
+		data.file = 0;
 		data.map = 0;
 		data.textures = ft_calloc(sizeof(char *), 7);
 		if (!data.textures)

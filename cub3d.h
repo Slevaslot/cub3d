@@ -14,8 +14,11 @@ typedef struct t_data
 	void	*mlx_ptr;
 	void	*win_ptr;
 	int		*mlx_img;
+	char	**file;
 	char	**map;
 	char	**textures;
+	int		*c_color;
+	int		*f_color;
 	int		line_legth;
 	char	*map_line;
 } t_data;
@@ -33,6 +36,6 @@ int		parse_for_texture2(t_data *data, int i, int j);
 int		parse_for_texture3(t_data *data, int i, int j);
 int		get_floor_color(t_data *data, int i, int j);
 int		get_ceiling_color(t_data *data, int i, int j);
-int		check_map(char **map);
+int		check_map(t_data *data, char **file);
 
 #endif

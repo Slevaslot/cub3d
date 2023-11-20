@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pdosso-d <pdosso-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 19:36:46 by pdosso-d          #+#    #+#             */
-/*   Updated: 2023/11/10 15:50:27 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/20 15:11:15 by pdosso-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 void	free_tab(char **str);
+int		tab_size(char **str);
 
 #endif
