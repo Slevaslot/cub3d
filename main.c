@@ -3,16 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdosso-d <pdosso-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/20 17:47:36 by pdosso-d         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:24:00 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	display(t_data *data)
+{
+	int i;
+	int	j;
+	int	x;
+	int y;
 
+	x = data->px * 32;
+	y = data->py * 32;
+	j = -1;
+	while (++j <= 32)
+	{
+		i = -1;
+		while (++i <= 32)
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x + i, y + j, 0xFFFFFF);
+	}
+}
 
 int	start_program(char *map_name, t_data *data)
 {
@@ -21,8 +37,12 @@ int	start_program(char *map_name, t_data *data)
 		return (-1);
 	data->win_ptr = mlx_new_window(data->mlx_ptr, 1920, 1080, "Cub3d");
 	map_init(data, map_name);
+	display(data);
+	display(data);
+	display(data);
+	display(data);
+	// browse_image(data);
 	mlx_key_hook(data->win_ptr, del_key, data);
-	browse_image(data);
 	mlx_hook(data->win_ptr, 17, 0, close_window, data);
 	mlx_loop(data->mlx_ptr);
 	// map_print(data->file);
@@ -58,7 +78,6 @@ void	draw_minimap(t_data *data)
 		y += 0.1;
 	}
 }
-
 
 int	check_arg(char *av)
 {

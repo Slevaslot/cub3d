@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_sequel.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdosso-d <pdosso-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 14:40:03 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/20 17:28:39 by pdosso-d         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:09:23 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ int	check_map(t_data *data, char **mp)
 					return (1);
 				if (mp[j][i] == 'E' || mp[j][i] == 'N'|| mp[j][i] == 'W'
 					|| mp[j][i] == 'S')
+				{
+					data->px = i;
+					data->py = j;
 					counter++;
+				}
 			}
 			else
 				return (1);

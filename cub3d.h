@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <math.h>
 
 typedef struct t_data
 {
@@ -23,6 +24,8 @@ typedef struct t_data
 	int		err;
 	int		*f_color;
 	int		*c_color;
+	float	px;
+	float	py;
 } t_data;
 
 /* close key */

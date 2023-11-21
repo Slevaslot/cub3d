@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdosso-d <pdosso-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 17:48:03 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/20 18:04:45 by pdosso-d         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:28:45 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,10 @@ int	del_key(int key, t_data *data)
 		free_all(data);
 		exit(0);
 	}
-	if (key == 65361)
-		rotate_left(data);
-	if (key == 65363)
-		rotate_right(data);
-	browse_image(data);
+	// if (key == 65361)
+	// 	rotate_left(data);
+	// if (key == 65363)
+	// 	rotate_right(data);
+	// browse_image(data);
 	return (0);
 }
