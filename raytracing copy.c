@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:32:10 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/21 22:14:01 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/21 22:12:47 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ int	raytracing(t_data *data)
   double dirX = -1, dirY = 0; //initial direction vector
   double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
 
+  // double time = 0; //time of current frame
+  // double oldTime = 0; //time of previous frame
+
+  // while(1)
+  // {
     for(int x = 0; x < 1920; x++)
     {
       //calculate ray position and direction
@@ -69,6 +74,13 @@ int	raytracing(t_data *data)
       //these are derived as:
       double deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
       double deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
+      //which can be simplified to abs(|rayDir| / rayDirX) and abs(|rayDir| / rayDirY)
+      //where |rayDir| is the length of the vector (rayDirX, rayDirY). Its length,
+      //unlike (dirX, dirY) is not 1, however this does not matter, only the
+      //ratio between deltaDistX and deltaDistY matters, due to the way the DDA
+      //stepping further below works. So the values can be computed as below.
+      // Division through zero is prevented, even though technically that's not
+      // needed in C++ with IEEE 754 floating point values.
       // double deltaDistX = (rayDirX == 0) ? 1e30 : std::abs(1 / rayDirX);
       // double deltaDistY = (rayDirY == 0) ? 1e30 : std::abs(1 / rayDirY);
 

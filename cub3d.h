@@ -43,5 +43,5 @@ int		get_floor_color(t_data *data, int i, int j);
 int		get_ceiling_color(t_data *data, int i, int j);
 int		check_map(t_data *data, char **file);
 void	browse_image(t_data *data);
-
+int		raytracing(t_data *data);
 #endif
