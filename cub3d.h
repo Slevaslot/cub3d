@@ -24,8 +24,15 @@ typedef struct t_data
 	int		err;
 	int		*f_color;
 	int		*c_color;
-	float	px;
-	float	py;
+	int		cc;
+	int		cf;
+	float	posX;
+	float	posY;
+	int		key_pressed;
+	double	dirX;
+	double	dirY;
+	double	planeX;
+	double	planeY;
 } t_data;
 
 /* close key */

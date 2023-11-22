@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:37 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/21 17:56:10 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/22 18:00:42 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,17 @@ int	map_fill(t_data *data, int fd)
 	return (0);
 }
 
+int	int_join(int *n)
+{
+	int i;
+	i = n[2];
+	i = i * 256;
+	i = i + n[1];
+	i = i * 256;
+	i = i + n[0];
+	return (i);
+}
+
 void	map_init(t_data *data, char *map_name)
 {
 	int	fd;
@@ -136,4 +147,6 @@ void	map_init(t_data *data, char *map_name)
 		close_error("File does not exist\n", data);
 	if (map_fill(data, fd))
 		close_error("Map is wrong\n", data);
+	data->cf = int_join(data->f_color);
+	data->cc = int_join(data->c_color);
 }

@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 14:40:03 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/21 18:09:23 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/22 17:45:28 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,7 @@ int	check_map(t_data *data, char **mp)
 				|| z(mp[j][i - 1])) && (mp[j][i + 1]) && (mp[j][i + 1] ==  '1'
 				|| z(mp[j][i + 1])) && (mp[j - 1][i]) && (mp[j - 1][i] ==  '1'
 				|| z(mp[j - 1][i])) && (mp[j + 1][i]) && (mp[j + 1][i] ==  '1'
-				|| z(mp[j + 1][i])) && (mp[j + 1][i + 1])
-				&& (mp[j + 1][i + 1] ==  '1' || z(mp[j + 1][i + 1]))
-				&& (mp[j - 1][i - 1]) && (mp[j - 1][i - 1] ==  '1'
-				|| z(mp[j - 1][i - 1]))))
+				|| z(mp[j + 1][i]))))
 			{
 				if (mp[j][i] != '1' && mp[j][i] != '0' && mp[j][i] != 'W'
 					&& mp[j][i] != 'E' && mp[j][i] != 'N' && mp[j][i] != 'S'
@@ -54,8 +51,8 @@ int	check_map(t_data *data, char **mp)
 				if (mp[j][i] == 'E' || mp[j][i] == 'N'|| mp[j][i] == 'W'
 					|| mp[j][i] == 'S')
 				{
-					data->px = i;
-					data->py = j;
+					data->posX = j;
+					data->posY = i;
 					counter++;
 				}
 			}
