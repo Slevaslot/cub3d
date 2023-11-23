@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:32:10 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/23 15:38:07 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/23 15:55:55 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	raytracing(t_data *data)
 {
-  // printf("posx:%f\n, posy:%f\n", data->posX, data->posY);
+  printf("posx:%f\n, posy:%f\n", data->posX, data->posY);
     for(int x = 0; x < 1920; x++)
     {
       //calculate ray position and direction

@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/23 15:38:33 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/23 15:59:08 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	start_program(char *map_name, t_data *data)
 	data->win_ptr = mlx_new_window(data->mlx_ptr, 1980, 1080, "Cub3d");
 	map_init(data, map_name);
 	data->dirX = -1;
-	mlx_key_hook(data->win_ptr, ez, data);
+	// mlx_key_hook(data->win_ptr, ez, data);
+	mlx_loop_hook(data->mlx_ptr, raytracing, data);
 	mlx_hook(data->win_ptr, 2, 1L << 0, key, data);
 	mlx_hook(data->win_ptr, 17, 0, close_window, data);
 	mlx_loop(data->mlx_ptr);
