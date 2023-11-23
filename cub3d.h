@@ -39,7 +39,7 @@ typedef struct t_data
 
 int		close_error(char *err_message, t_data *data);
 int		close_window(t_data *data);
-int		del_key(int key, t_data *data);
+int		key(int key, t_data *data);
 void	map_init(t_data *data, char *map_name);
 void	free_all(t_data *data);
 void	map_print(char **str);

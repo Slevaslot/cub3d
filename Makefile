@@ -5,7 +5,6 @@ SRCS 	= main.c \
 		  map_init.c \
 		  parsing.c \
 		  parsing_sequel.c \
-		  print_map.c \
 		  raytracing.c\
 
 OBJS 	= $(addprefix obj/,${SRCS:.c=.o} ${SRCS_LIBFT:.c=.o})

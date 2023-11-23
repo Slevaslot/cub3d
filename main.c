@@ -6,21 +6,29 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/22 17:07:27 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/23 15:38:33 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	ez(int key, t_data *data)
+{
+	if (key == 65293)
+		raytracing(data);
+	return (0);
+}
 
 int	start_program(char *map_name, t_data *data)
 {
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		return (-1);
-	data->win_ptr = mlx_new_window(data->mlx_ptr, 1920, 1080, "Cub3d");
+	data->win_ptr = mlx_new_window(data->mlx_ptr, 1980, 1080, "Cub3d");
 	map_init(data, map_name);
 	data->dirX = -1;
-	mlx_key_hook(data->win_ptr, del_key, data);
+	mlx_key_hook(data->win_ptr, ez, data);
+	mlx_hook(data->win_ptr, 2, 1L << 0, key, data);
 	mlx_hook(data->win_ptr, 17, 0, close_window, data);
 	mlx_loop(data->mlx_ptr);
 	return (1);
@@ -29,31 +37,6 @@ int	start_program(char *map_name, t_data *data)
 int	exit_all(void)
 {
 	exit(0);
-}
-
-void	draw_minimap(t_data *data)
-{
-	float		x;
-	float		y;
-
-	y = 0;
-	while (data->map[(int)y] != NULL)
-	{
-		x = 0;
-		while (data->map[(int)y][(int)x] != '\0')
-		{
-			if (data->map[(int)y][(int)x] == '0') // Mur
-				mlx_pixel_put(data->mlx_ptr, data->win_ptr, x * 20, y * 20, 0xFFFFFF); // Blanc
-			else if (data->map[(int)y][(int)x] == 'N' || data->map[(int)y][(int)x] == 'S' || data->map[(int)y][(int)x] == 'E' || data->map[(int)y][(int)x] == 'W') // Joueur
-				mlx_pixel_put(data->mlx_ptr, data->win_ptr, x * 20, y * 20, 0xFF0000); // Rouge
-			else if (data->map[(int)y][(int)x] == '1') // Objet
-				mlx_pixel_put(data->mlx_ptr, data->win_ptr, x * 20, y * 20, 0x00FF00); // Vert
-			else
-				mlx_pixel_put(data->mlx_ptr, data->win_ptr, x * 20, y * 20, 0x000000); // Noir (espace vide)
-			x += 0.1;
-		}
-		y += 0.1;
-	}
 }
 
 int	check_arg(char *av)
