@@ -12,14 +12,18 @@ OBJS 	= $(addprefix obj/,${SRCS:.c=.o} ${SRCS_LIBFT:.c=.o})
 LIBS = minilibx-linux/libmlx_Linux.a libft_gnl/libft_gnl.a -lXext -lX11 -lm
 
 CFLAGS 	= -Wall -Wextra -Werror
+FOLDER_NAME = obj
 CC 		= gcc
+
+create_folder:
+	mkdir -p $(FOLDER_NAME)
 
 obj/%.o: %.c
 	gcc ${CFLAGS} -g3 -c $< -o $@
 
 all: 		${PROG}
 
-${PROG}:	${OBJS}
+${PROG}: create_folder ${OBJS}
 					@make -C minilibx-linux/
 					@make -C libft_gnl/
 					@$(CC) ${OBJS} ${LIBS} -o ${PROG}
