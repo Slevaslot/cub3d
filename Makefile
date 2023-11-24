@@ -15,9 +15,6 @@ CFLAGS 	= -Wall -Wextra -Werror
 FOLDER_NAME = obj
 CC 		= gcc
 
-create_folder:
-	mkdir -p $(FOLDER_NAME)
-
 obj/%.o: %.c
 	gcc ${CFLAGS} -g3 -c $< -o $@
 
@@ -31,6 +28,9 @@ ${PROG}: create_folder ${OBJS}
 
 
 bonus:		${PROG_B}
+
+create_folder:
+	mkdir -p $(FOLDER_NAME)
 
 ${PROG_B}:	${OBJS_B}
 
