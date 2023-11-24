@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:32:10 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/23 15:55:55 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/24 18:12:31 by slevaslo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	raytracing(t_data *data)
 {
-  printf("posx:%f\n, posy:%f\n", data->posX, data->posY);
-    for(int x = 0; x < 1920; x++)
+  // printf("posx:%f, posy:%f\n", data->posX, data->posY);
+    for(int x = 0; x < 960; x++)
     {
       //calculate ray position and direction
-      double cameraX = 2 * x / (double)1920 - 1; //x-coordinate in camera space
+      double cameraX = 2 * x / (double)960 - 1; //x-coordinate in camera space
       double rayDirX = data->dirX + data->planeX * cameraX;
       double rayDirY = data->dirY + data->planeY * cameraX;
       //which box of the map we're in
@@ -94,13 +94,13 @@ int	raytracing(t_data *data)
       else          perpWallDist = (sideDistY - deltaDistY);
 
       //Calculate height of line to draw on screen
-      int lineHeight = (int)(1080 / perpWallDist);
+      int lineHeight = (int)(540 / perpWallDist);
 
       //calculate lowest and highest pixel to fill in current stripe
-      int drawStart = -lineHeight / 2 + 1080 / 2;
+      int drawStart = -lineHeight / 2 + 540 / 2;
       if(drawStart < 0) drawStart = 0;
-      int drawEnd = lineHeight / 2 + 1080 / 2;
-      if(drawEnd >= 1080) drawEnd = 1080 - 1;
+      int drawEnd = lineHeight / 2 + 540 / 2;
+      if(drawEnd >= 540) drawEnd = 540 - 1;
 
       //choose wall color
       // ColorRGB color;
@@ -125,9 +125,10 @@ int	raytracing(t_data *data)
       while (drawStart + ++l < drawEnd)
         mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, drawStart + l, 0xFF0000);
       k = drawEnd;
-      while (++k < 1080)
+      while (++k < 540)
         mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, k, data->cf);
       // verLine(x, drawStart, drawEnd, color);
     }
+    // draw_minimap(data);
     return (1);
 }

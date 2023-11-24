@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   truc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:16:04 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/23 14:40:00 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/24 18:06:27 by slevaslo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-mlx_hook(recup->data.mlx_win, 33, 1L << 17, ft_exit, recup);
-mlx_hook(recup->data.mlx_win, 2, 1L << 0, ft_key_press, recup);
-mlx_hook(recup->data.mlx_win, 3, 1L << 1, ft_key_release, recup);
+// mlx_hook(recup->data.mlx_win, 33, 1L << 17, ft_exit, recup);
+// mlx_hook(recup->data.mlx_win, 2, 1L << 0, ft_key_press, recup);
+// mlx_hook(recup->data.mlx_win, 3, 1L << 1, ft_key_release, recup);
 
 void	draw_minimap(t_data *data)
 {

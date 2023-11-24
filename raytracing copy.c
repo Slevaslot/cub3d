@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raytracing.c                                       :+:      :+:    :+:   */
+/*   raytracing copy.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:32:10 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/21 22:12:47 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/24 18:12:31 by slevaslo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-#define screenWidth 1920
-#define screenHeight 1080
+#define screenWidth 960
+#define screenHeight 540
 #define mapWidth 24
 #define mapHeight 24
 
@@ -56,10 +56,10 @@ int	raytracing(t_data *data)
 
   // while(1)
   // {
-    for(int x = 0; x < 1920; x++)
+    for(int x = 0; x < 960; x++)
     {
       //calculate ray position and direction
-      double cameraX = 2 * x / (double)1920 - 1; //x-coordinate in camera space
+      double cameraX = 2 * x / (double)960 - 1; //x-coordinate in camera space
       double rayDirX = dirX + planeX * cameraX;
       double rayDirY = dirY + planeY * cameraX;
       //which box of the map we're in
@@ -142,13 +142,13 @@ int	raytracing(t_data *data)
       else          perpWallDist = (sideDistY - deltaDistY);
 
       //Calculate height of line to draw on screen
-      int lineHeight = (int)(1080 / perpWallDist);
+      int lineHeight = (int)(540 / perpWallDist);
 
       //calculate lowest and highest pixel to fill in current stripe
-      int drawStart = -lineHeight / 2 + 1080 / 2;
+      int drawStart = -lineHeight / 2 + 540 / 2;
       if(drawStart < 0) drawStart = 0;
-      int drawEnd = lineHeight / 2 + 1080 / 2;
-      if(drawEnd >= 1080) drawEnd = 1080 - 1;
+      int drawEnd = lineHeight / 2 + 540 / 2;
+      if(drawEnd >= 540) drawEnd = 540 - 1;
 
       //choose wall color
       // ColorRGB color;

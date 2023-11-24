@@ -33,6 +33,7 @@ typedef struct t_data
 	double	dirY;
 	double	planeX;
 	double	planeY;
+	char	player_dir;
 } t_data;
 
 /* close key */
@@ -51,4 +52,5 @@ int		get_ceiling_color(t_data *data, int i, int j);
 int		check_map(t_data *data, char **file);
 void	browse_image(t_data *data);
 int		raytracing(t_data *data);
+void	draw_minimap(t_data *data);
 #endif
