@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:32:10 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/27 15:57:47 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/27 18:08:56 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,14 +108,18 @@ int	raytracing(t_data *data)
       //draw the pixels of the stripe as a vertical line
       int l = -1;
       int k = -1;
+      // int i = 12;
       int pixel_value;
+      printf("%f\n", (double)(drawEnd - drawStart) / (double)(16 / 10));
+      // printf("calcul = %d\nl = %d\n", (drawEnd - drawStart) * ((16 - i / 16)), l);
       while (++k < drawStart)
         mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, k, data->cc);
       while (drawStart + ++l < drawEnd)
       {
-        pixel_value = *(int *)(data->addr[0] + 10 * l + 10);
-        (void)pixel_value;
-        mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, drawStart + l, 0xFF0000);
+        if (l >= (drawEnd - drawStart) - ((drawEnd - drawStart) * (((16 - i)/ 16))))
+          i++;
+        pixel_value = *(int *)(data->addr[0] + i);
+        mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, drawStart + l, pixel_value);
       }
       k = drawEnd;
       while (++k < 1016)

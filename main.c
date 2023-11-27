@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/27 16:13:52 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/27 16:34:12 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	get_texture(t_data *data)
 	data->img[1] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[1], &w, &h);
 	data->img[2] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[2], &w, &h);
 	data->img[3] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[3], &w, &h);
-	data->addr[0] = mlx_get_data_addr(data->img, &pixel_bits, &line_bytes, &edian);
-	data->addr[1] = mlx_get_data_addr(data->img, &pixel_bits, &line_bytes, &edian);
-	data->addr[2] = mlx_get_data_addr(data->img, &pixel_bits, &line_bytes, &edian);
-	data->addr[3] = mlx_get_data_addr(data->img, &pixel_bits, &line_bytes, &edian);
+	data->addr[0] = mlx_get_data_addr(data->img[0], &pixel_bits, &line_bytes, &edian);
+	data->addr[1] = mlx_get_data_addr(data->img[1], &pixel_bits, &line_bytes, &edian);
+	data->addr[2] = mlx_get_data_addr(data->img[2], &pixel_bits, &line_bytes, &edian);
+	data->addr[3] = mlx_get_data_addr(data->img[3], &pixel_bits, &line_bytes, &edian);
 }
 
 void	found_player_dir(t_data *data)
@@ -80,9 +80,9 @@ int	start_program(char *map_name, t_data *data)
 	map_init(data, map_name);
 	found_player_dir(data);
 	get_texture(data);
-	mlx_loop_hook(data->mlx_ptr, raytracing, data);
-	mlx_hook(data->win_ptr, 2, 1L << 0, key, data);
 	mlx_hook(data->win_ptr, 17, 0, close_window, data);
+	mlx_hook(data->win_ptr, 2, 1L << 0, key, data);
+	mlx_loop_hook(data->mlx_ptr, raytracing, data);
 	mlx_loop(data->mlx_ptr);
 	return (1);
 }
@@ -118,6 +118,8 @@ int	main(int ac, char **av)
 		data.f_color = 0;
 		data.c_color = 0;
 		data.map = 0;
+		data.addr = 0;
+		data.img = 0;
 		data.txtr = ft_calloc(sizeof(char *), 7);
 		if (!data.txtr)
 			return (1);

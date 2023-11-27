@@ -62,10 +62,10 @@ void *mlx_init()
       [app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
       break;
     }
-  usleep(101600);
+  usleep(100000);
   ProcessSerialNumber psn = { 0, kCurrentProcess };
   (void) TransformProcessType(&psn, kProcessTransformToForegroundApplication);
-  usleep(101600);
+  usleep(100000);
   [[NSRunningApplication currentApplication] activateWithOptions:NSApplicationActivateIgnoringOtherApps];
 
   // load font
@@ -107,7 +107,7 @@ void mlx_loop(mlx_ptr_t *mlx_ptr)
   observer = CFRunLoopObserverCreate(NULL, kCFRunLoopBeforeTimers, true, 0, do_loop_flush, &ocontext);
   CFRunLoopAddObserver(CFRunLoopGetMain(), observer, kCFRunLoopCommonModes);
 
-  //  [[[MlxLoopHookObj alloc] initWithPtr:mlx_ptr] performSelector:@selector(do_loop_hook) withObject:nil afterDelay:0.0];
+  //  [[[MlxLoopHookObj alloc] initWithPtr:mlx_ptr] performSelector:@selector(do__hook) withObject:nil afterDelay:0.0];
 
   [NSApp run];
 }

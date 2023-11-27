@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:37:28 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/27 15:06:27 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/27 16:49:50 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ void	map_print(char **str)
 
 void	free_all(t_data *data)
 {
-	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	mlx_destroy_display(data->mlx_ptr);
+	int	i;
+
+	i = -1;
 	if (data->f_color)
 		free(data->f_color);
 	if (data->c_color)
@@ -39,5 +40,15 @@ void	free_all(t_data *data)
 	free_tab(data->file);
 	free_tab(data->map);
 	free_tab(data->txtr);
+	while (data->img && ++i < 4)
+	{
+		mlx_destroy_image(data->mlx_ptr, data->img[i]);
+		if (i == 3)
+			free(data->img);
+	}
+	if (data->addr)
+		free(data->addr);
+	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);
 }
