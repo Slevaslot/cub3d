@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/27 16:04:56 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/27 16:13:52 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	get_texture(t_data *data)
 	data->img[1] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[1], &w, &h);
 	data->img[2] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[2], &w, &h);
 	data->img[3] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[3], &w, &h);
-	data->addr[0] = mlx_get_data_addr(data->img, *pixel_bits, *line_bytes, NULL);
-	data->addr[1] = mlx_get_data_addr(data->img, NULL, *line_bytes, NULL);
-	data->addr[2] = mlx_get_data_addr(data->img, NULL, *line_bytes, NULL);
-	data->addr[3] = mlx_get_data_addr(data->img, NULL, *line_bytes, NULL);
+	data->addr[0] = mlx_get_data_addr(data->img, &pixel_bits, &line_bytes, &edian);
+	data->addr[1] = mlx_get_data_addr(data->img, &pixel_bits, &line_bytes, &edian);
+	data->addr[2] = mlx_get_data_addr(data->img, &pixel_bits, &line_bytes, &edian);
+	data->addr[3] = mlx_get_data_addr(data->img, &pixel_bits, &line_bytes, &edian);
 }
 
 void	found_player_dir(t_data *data)
