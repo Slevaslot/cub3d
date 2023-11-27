@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:37:28 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/21 15:07:47 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/27 15:06:27 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ void	free_all(t_data *data)
 {
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);
-	free(data->f_color);
-	free(data->c_color);
+	if (data->f_color)
+		free(data->f_color);
+	if (data->c_color)
+		free(data->c_color);
 	free_tab(data->file);
 	free_tab(data->map);
-	free_tab(data->textures);
+	free_tab(data->txtr);
 	free(data->mlx_ptr);
 }

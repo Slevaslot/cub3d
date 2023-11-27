@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 17:48:03 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/24 18:10:04 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/11/27 16:07:10 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	key(int key, t_data *data)
 	double	moveSpeed;
 	double	rotSpeed;
 
-	rotSpeed = 0.0166 * 3.0;
-	moveSpeed = 0.0166 * 5.0;
+	rotSpeed = 0.042;
+	moveSpeed = 0.083;
 	oldPlaneX = data->planeX;
 	oldDirX = data->dirX;
 	// printf("dirx:%f, diry:%f\nplaneX:%f, planeY:%f\n", data->dirX, data->dirY, data->planeX, data->planeY);
@@ -68,17 +68,19 @@ int	key(int key, t_data *data)
 	}
 	else if (key == 100)
 	{
-		if (data->map[(int)(data->posX + data->dirY * moveSpeed)][(int)data->posY] != '1')
+		if (data->map[(int)(data->posX + data->dirY * moveSpeed)][(int)(data->posY - data->dirX * moveSpeed)] != '1')
+		{
 			data->posX += data->dirY * moveSpeed;
-		if (data->map[(int)data->posX][(int)(data->posY - data->dirX * moveSpeed)] != '1')
 			data->posY -= data->dirX * moveSpeed;
+		}
 	}
 	else if (key == 97)
 	{
-		if (data->map[(int)(data->posX - data->dirY * moveSpeed)][(int)data->posY] == '0')
+		if (data->map[(int)(data->posX - data->dirY * moveSpeed)][(int)(data->posY + data->dirX * moveSpeed)] == '0')
+		{
 			data->posX -= data->dirY * moveSpeed;
-		if (data->map[(int)data->posX][(int)(data->posY + data->dirX * moveSpeed)] == '0')
 			data->posY += data->dirX * moveSpeed;
+		}
 	}
 	// raytracing(data);
 	return (0);

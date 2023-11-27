@@ -62,10 +62,10 @@ void *mlx_init()
       [app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
       break;
     }
-  usleep(100000);
+  usleep(101600);
   ProcessSerialNumber psn = { 0, kCurrentProcess };
   (void) TransformProcessType(&psn, kProcessTransformToForegroundApplication);
-  usleep(100000);
+  usleep(101600);
   [[NSRunningApplication currentApplication] activateWithOptions:NSApplicationActivateIgnoringOtherApps];
 
   // load font

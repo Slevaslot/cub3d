@@ -14,11 +14,11 @@ typedef struct t_data
 	int		i;
 	void	*mlx_ptr;
 	void	*win_ptr;
-	int		*mlx_img;
+	void	**img;
 	char	**file;
 	char	**map;
-	char	**img;
-	char	**textures;
+	char	**img2;
+	char	**txtr;
 	int		line_legth;
 	char	*map_line;
 	int		err;
@@ -34,6 +34,7 @@ typedef struct t_data
 	double	planeX;
 	double	planeY;
 	char	player_dir;
+	char	**addr;
 } t_data;
 
 /* close key */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   truc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:16:04 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/24 18:06:27 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:50:10 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	rotate_right(t_data *data)
 void	image_error(t_data *data, int j)
 {
 	while (j > 0)
-		mlx_destroy_image(data->mlx_ptr, data->img[--j]);
+		mlx_destroy_image(data->mlx_ptr, data->img2[--j]);
 	data->err = 1;
 	exit(0);
 }
@@ -128,10 +128,10 @@ void	put_image(t_data *data, int *j, char *str)
 
 	h = 64;
 	w = 64;
-	data->img[j[2]] = mlx_xpm_file_to_image(data->mlx_ptr, str, &w, &h);
-	if (!data->img[j[2]])
+	data->img2[j[2]] = mlx_xpm_file_to_image(data->mlx_ptr, str, &w, &h);
+	if (!data->img2[j[2]])
 		image_error(data, j[2]);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img[j[2]], j[0], j[1]);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img2[j[2]], j[0], j[1]);
 }
 
 void	browse_char(t_data *data, char c, int *j)
@@ -152,8 +152,8 @@ void	browse_char(t_data *data, char c, int *j)
 
 int	alloc_img(t_data *data)
 {
-	data->img = malloc(sizeof(void *) * 1000);
-	if (!data->img)
+	data->img2 = malloc(sizeof(void *) * 1016);
+	if (!data->img2)
 		return (1);
 	return (0);
 }

@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/24 18:12:31 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/11/27 16:04:56 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	get_texture(t_data *data)
+{
+	int	w;
+	int	h;
+	int	pixel_bits;
+	int	line_bytes;
+	int	edian;
+
+	data->addr = ft_calloc(sizeof(char *), 5);
+	data->img = ft_calloc(sizeof(void *), 5);
+	data->img[0] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[0], &w, &h);
+	data->img[1] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[1], &w, &h);
+	data->img[2] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[2], &w, &h);
+	data->img[3] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[3], &w, &h);
+	data->addr[0] = mlx_get_data_addr(data->img, *pixel_bits, *line_bytes, NULL);
+	data->addr[1] = mlx_get_data_addr(data->img, NULL, *line_bytes, NULL);
+	data->addr[2] = mlx_get_data_addr(data->img, NULL, *line_bytes, NULL);
+	data->addr[3] = mlx_get_data_addr(data->img, NULL, *line_bytes, NULL);
+}
 
 void	found_player_dir(t_data *data)
 {
@@ -56,9 +76,10 @@ int	start_program(char *map_name, t_data *data)
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		return (-1);
-	data->win_ptr = mlx_new_window(data->mlx_ptr, 960, 540, "Cub3d");
+	data->win_ptr = mlx_new_window(data->mlx_ptr, 1920, 1016, "Cub3d");
 	map_init(data, map_name);
 	found_player_dir(data);
+	get_texture(data);
 	mlx_loop_hook(data->mlx_ptr, raytracing, data);
 	mlx_hook(data->win_ptr, 2, 1L << 0, key, data);
 	mlx_hook(data->win_ptr, 17, 0, close_window, data);
@@ -94,8 +115,11 @@ int	main(int ac, char **av)
 			return (1);
 		data.file = 0;
 		data.key_pressed = 0;
-		data.textures = ft_calloc(sizeof(char *), 7);
-		if (!data.textures)
+		data.f_color = 0;
+		data.c_color = 0;
+		data.map = 0;
+		data.txtr = ft_calloc(sizeof(char *), 7);
+		if (!data.txtr)
 			return (1);
 		if (start_program(av[1], &data) < 0)
 			return (exit_all());
@@ -103,5 +127,5 @@ int	main(int ac, char **av)
 
 	}
 	else
-		return (printf("wrong parameter : ./cub3d map.cub\n"), 1);
+		return (printf("Error : too much parameter\n"), 1);
 }

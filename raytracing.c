@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:32:10 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/24 18:12:31 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:57:47 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 int	raytracing(t_data *data)
 {
   // printf("posx:%f, posy:%f\n", data->posX, data->posY);
-    for(int x = 0; x < 960; x++)
+    for(int x = 0; x < 1920; x++)
     {
       //calculate ray position and direction
-      double cameraX = 2 * x / (double)960 - 1; //x-coordinate in camera space
+      double cameraX = 2 * x / (double)1920 - 1; //x-coordinate in camera space
       double rayDirX = data->dirX + data->planeX * cameraX;
       double rayDirY = data->dirY + data->planeY * cameraX;
       //which box of the map we're in
@@ -94,24 +94,13 @@ int	raytracing(t_data *data)
       else          perpWallDist = (sideDistY - deltaDistY);
 
       //Calculate height of line to draw on screen
-      int lineHeight = (int)(540 / perpWallDist);
+      int lineHeight = (int)(1016 / perpWallDist);
 
       //calculate lowest and highest pixel to fill in current stripe
-      int drawStart = -lineHeight / 2 + 540 / 2;
+      int drawStart = -lineHeight / 2 + 1016 / 2;
       if(drawStart < 0) drawStart = 0;
-      int drawEnd = lineHeight / 2 + 540 / 2;
-      if(drawEnd >= 540) drawEnd = 540 - 1;
-
-      //choose wall color
-      // ColorRGB color;
-      // switch(data->map[mapX][mapY])
-      // {
-      //   case 1:  color = RGB_Red;    break; //red
-      //   case 2:  color = RGB_Green;  break; //green
-      //   case 3:  color = RGB_Blue;   break; //blue
-      //   case 4:  color = RGB_White;  break; //white
-      //   default: color = RGB_Yellow; break; //yellow
-      // }
+      int drawEnd = lineHeight / 2 + 1016 / 2;
+      if(drawEnd >= 1016) drawEnd = 1016 - 1;
 
       //give x and y sides different brightness
       // if(side == 1) {color = color / 2;}
@@ -119,13 +108,17 @@ int	raytracing(t_data *data)
       //draw the pixels of the stripe as a vertical line
       int l = -1;
       int k = -1;
-      // printf("%d\n", drawStart);
+      int pixel_value;
       while (++k < drawStart)
         mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, k, data->cc);
       while (drawStart + ++l < drawEnd)
+      {
+        pixel_value = *(int *)(data->addr[0] + 10 * l + 10);
+        (void)pixel_value;
         mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, drawStart + l, 0xFF0000);
+      }
       k = drawEnd;
-      while (++k < 540)
+      while (++k < 1016)
         mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, k, data->cf);
       // verLine(x, drawStart, drawEnd, color);
     }

@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:37 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/22 18:00:42 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/27 14:11:34 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,11 +130,11 @@ int	map_fill(t_data *data, int fd)
 int	int_join(int *n)
 {
 	int i;
-	i = n[2];
+	i = n[0];
 	i = i * 256;
 	i = i + n[1];
 	i = i * 256;
-	i = i + n[0];
+	i = i + n[2];
 	return (i);
 }
 
