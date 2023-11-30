@@ -16,7 +16,7 @@
 // mlx_hook(recup->data.mlx_win, 2, 1L << 0, ft_key_press, recup);
 // mlx_hook(recup->data.mlx_win, 3, 1L << 1, ft_key_release, recup);
 
-void	draw_minimap(t_data *data)
+void	draw_minimap_bis(t_data *data)
 {
 	float		x;
 	float		y;
@@ -41,6 +41,100 @@ void	draw_minimap(t_data *data)
 	}
 }
 
+
+void draw_minimap(t_data *data)
+{
+float		x;
+	float		y;
+	int	pixel_bits;
+	int	line_bytes;
+	int	edian;
+	int color;
+	y = 0;
+	data->addrformini = mlx_get_data_addr(data->image_mini, &pixel_bits, &line_bytes, &edian);
+    while (data->map[(int)y] != NULL)
+    {
+        x = 0;
+        while (data->map[(int)y][(int)x] != '\0')
+        {
+                      int pixel_index = (int)((y * line_bytes / (pixel_bits / 8) * 10) + (x * 10)); // Calcul de l'index du pixel
+            if (data->map[(int)y][(int)x] == '0') // Mur
+                color = 0xFFFFFF; // Blanc
+            else if (data->map[(int)y][(int)x] == 'N' || data->map[(int)y][(int)x] == 'S' || data->map[(int)y][(int)x] == 'E' || data->map[(int)y][(int)x] == 'W') // Joueur
+                color = 0xFF0000; // Rouge
+            else if (data->map[(int)y][(int)x] == '1') // Objet
+                color = 0x00FF00; // Vert
+            else
+                color = 0x000000; // Noir (espace vide)
+
+            // Écriture directe dans la mémoire tampon
+            *(unsigned int *)(data->addrformini + pixel_index * (pixel_bits / 8)) = color;
+
+            x += 0.1;
+        }
+        y += 0.1;
+    }
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image_mini, 0, 0);
+
+}
+
+void	draw_minimap_trois(t_data *data)
+{
+	float		x;
+	float		y;
+	int	pixel_bits;
+	int	line_bytes;
+	int	edian;
+	int color;
+	float ok;
+
+	ok = 32;
+	y = 0;
+	data->addrformini = mlx_get_data_addr(data->image_mini, &pixel_bits, &line_bytes, &edian);
+while (data->map[(int)y] != NULL)
+{
+    x = 0;
+    while (data->map[(int)y][(int)x] != '\0')
+    {
+        if (data->map[(int)y][(int)x] == '1') // Mur
+            color =  0xFFFFFF; // Blanc
+        else if (x == data->posX && y == data->posY) // Joueur
+            color = 0xFF0000; // Rouge
+        else if (data->map[(int)y][(int)x] == '0') // Objet
+            color = 0x00FF00; // Vert
+        else
+            color = 0x000000; // Noir (espace vide)
+
+        // Calcul de l'index en prenant en compte la position de la ligne dans la minimap
+        int index = (int)(y * ok + x * (ok / 8));
+
+        // Ajout de la position en y pour obtenir un retour à la ligne
+        int yOffset = (int)(y * ok);
+
+        // Modification de la position mémoire
+        *(unsigned int *)(data->addrformini + index + yOffset) = color;
+        x += 1;
+    }
+    y += 1;
+}
+	// while (y < 50) // Changer la taille de la fenêtre selon vos besoins
+	// {
+	// 	x = 0;
+	// 	while (x < 50) // Changer la taille de la fenêtre selon vos besoins
+	// 	{
+	// 		// Exemple de couleur : violet (mix de rouge et de bleu)
+	// 		color = 0x00FF00FF;
+	// 		// Remplacez le pixel à la position (x, y) par la nouvelle couleur
+	// 		*(unsigned int *)(data->addrformini + ((int)(y * ok + x * (ok / 8)))) = color;
+	// 		x++;
+	// 	}
+	// 	y++;
+	// }
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image_mini, 0, 0);
+	// 	}
+	// 	y += 0.1;
+	// }
+}
 void	rotate_left(t_data *data)
 {
 	int	i;

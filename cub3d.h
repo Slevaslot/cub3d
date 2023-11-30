@@ -35,6 +35,8 @@ typedef struct t_data
 	double	planeY;
 	char	player_dir;
 	char	**addr;
+	void	*image_mini;
+	char *addrformini;
 } t_data;
 
 /* close key */

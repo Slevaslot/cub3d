@@ -108,7 +108,7 @@ int	raytracing(t_data *data)
       //draw the pixels of the stripe as a vertical line
       int l = -1;
       int k = -1;
-      // int i = 12;
+      int i = 16;
       int pixel_value;
       printf("%f\n", (double)(drawEnd - drawStart) / (double)(16 / 10));
       // printf("calcul = %d\nl = %d\n", (drawEnd - drawStart) * ((16 - i / 16)), l);
@@ -125,7 +125,7 @@ int	raytracing(t_data *data)
       while (++k < 1016)
         mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, k, data->cf);
       // verLine(x, drawStart, drawEnd, color);
+    draw_minimap(data);
     }
-    // draw_minimap(data);
     return (1);
 }

@@ -80,6 +80,7 @@ int	start_program(char *map_name, t_data *data)
 	map_init(data, map_name);
 	found_player_dir(data);
 	get_texture(data);
+	data->image_mini = mlx_new_image(data->mlx_ptr, 100, 100);
 	mlx_hook(data->win_ptr, 17, 0, close_window, data);
 	mlx_hook(data->win_ptr, 2, 1L << 0, key, data);
 	mlx_loop_hook(data->mlx_ptr, raytracing, data);
