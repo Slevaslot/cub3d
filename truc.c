@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:16:04 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/27 15:50:10 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/30 18:03:14 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,35 +44,34 @@ void	draw_minimap_bis(t_data *data)
 
 void draw_minimap(t_data *data)
 {
-float		x;
+	float		x;
 	float		y;
 	int	pixel_bits;
 	int	line_bytes;
 	int	edian;
 	int color;
-	y = 0;
+	x = 0;
 	data->addrformini = mlx_get_data_addr(data->image_mini, &pixel_bits, &line_bytes, &edian);
-    while (data->map[(int)y] != NULL)
+    while (data->map[(int)x] != NULL)
     {
-        x = 0;
-        while (data->map[(int)y][(int)x] != '\0')
+        y = 0;
+        while (data->map[(int)x][(int)y] != '\0')
         {
-                      int pixel_index = (int)((y * line_bytes / (pixel_bits / 8) * 10) + (x * 10)); // Calcul de l'index du pixel
-            if (data->map[(int)y][(int)x] == '0') // Mur
-                color = 0xFFFFFF; // Blanc
-            else if (data->map[(int)y][(int)x] == 'N' || data->map[(int)y][(int)x] == 'S' || data->map[(int)y][(int)x] == 'E' || data->map[(int)y][(int)x] == 'W') // Joueur
-                color = 0xFF0000; // Rouge
-            else if (data->map[(int)y][(int)x] == '1') // Objet
-                color = 0x00FF00; // Vert
+            int pixel_index = (int)((x * line_bytes / (pixel_bits / 8) * 10) + (y * 10)); // Calcul de l'index du pixel
+			if ((int)x == (int)data->posX && (int)y == (int)data->posY)
+				color = 0xFF0000;
+			else if (data->map[(int)x][(int)y] == '0' || data->map[(int)x][(int)y] == 'N' || data->map[(int)x][(int)y] == 'S' || data->map[(int)x][(int)y] == 'E' || data->map[(int)x][(int)y] == 'W') // Mur
+                color = data->cf;
+            else if (data->map[(int)x][(int)y] == '1') // Objet
+                color = 0x606060;
             else
                 color = 0x000000; // Noir (espace vide)
 
             // Écriture directe dans la mémoire tampon
             *(unsigned int *)(data->addrformini + pixel_index * (pixel_bits / 8)) = color;
-
-            x += 0.1;
+            y += 0.1;
         }
-        y += 0.1;
+        x += 0.1;
     }
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image_mini, 0, 0);
 

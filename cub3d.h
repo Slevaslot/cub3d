@@ -36,7 +36,10 @@ typedef struct t_data
 	char	player_dir;
 	char	**addr;
 	void	*image_mini;
-	char *addrformini;
+	char	*addrformini;
+	void	*window;
+	int		pixel_bits[4];
+	int		line_bytes[4];
 } t_data;
 
 /* close key */

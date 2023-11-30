@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:32:10 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/27 18:08:56 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/30 20:03:49 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,33 @@
 
 int	raytracing(t_data *data)
 {
-  // printf("posx:%f, posy:%f\n", data->posX, data->posY);
-    for(int x = 0; x < 1920; x++)
+    int    x;
+    double cameraX;
+    double rayDirX;
+    int    mapY;
+    int    mapX;
+    double rayDirY;
+    double sideDistX;
+    double sideDistY;
+    double deltaDistX;
+    double deltaDistY;
+    double perpWallDist;
+    int    stepX;
+    int    stepY;
+    int    hit;
+    int    side;
+
+    x = 0;
+    while (x++ < 1920)
     {
-      //calculate ray position and direction
-      double cameraX = 2 * x / (double)1920 - 1; //x-coordinate in camera space
-      double rayDirX = data->dirX + data->planeX * cameraX;
-      double rayDirY = data->dirY + data->planeY * cameraX;
-      //which box of the map we're in
-      int mapX = (int)data->posX;
-      int mapY = (int)data->posY;
-
-      //length of ray from current position to next x or y-side
-      double sideDistX;
-      double sideDistY;
-
-      //length of ray from one x or y-side to next x or y-side
-      //these are derived as:
-      double deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
-      double deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
-      // double deltaDistX = (rayDirX == 0) ? 1e30 : std::abs(1 / rayDirX);
-      // double deltaDistY = (rayDirY == 0) ? 1e30 : std::abs(1 / rayDirY);
-
-      double perpWallDist;
-
-      //what direction to step in x or y-direction (either +1 or -1)
-      int stepX;
-      int stepY;
-
-      int hit = 0; //was there a wall hit?
-      int side; //was a NS or a EW wall hit?
-      //calculate step and initial sideDist
+      cameraX = 2 * x / (double)1920 - 1;
+      rayDirX = data->dirX + data->planeX * cameraX;
+      rayDirY = data->dirY + data->planeY * cameraX;
+      mapY = (int)data->posY;
+      mapX = (int)data->posX;
+      deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
+      deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
+      hit = 0;
       if(rayDirX < 0)
       {
         stepX = -1;
@@ -65,7 +61,6 @@ int	raytracing(t_data *data)
         stepY = 1;
         sideDistY = (mapY + 1.0 - data->posY) * deltaDistY;
       }
-      //perform DDA
       while(hit == 0)
       {
         //jump to next map square, either in x-direction, or in y-direction
@@ -82,7 +77,8 @@ int	raytracing(t_data *data)
           side = 1;
         }
         //Check if ray has hit a wall
-        if(data->map[mapX][mapY] == '1') hit = 1;
+        if(data->map[mapX][mapY] == '1')
+          hit = 1;
       }
       //Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
       //hit to the camera plane. Euclidean to center camera point would give fisheye effect!
@@ -90,30 +86,32 @@ int	raytracing(t_data *data)
       //for size == 1, but can be simplified to the code below thanks to how sideDist and deltaDist are computed:
       //because they were left scaled to |rayDir|. sideDist is the entire length of the ray above after the multiple
       //steps, but we subtract deltaDist once because one step more into the wall was taken above.
-      if(side == 0) perpWallDist = (sideDistX - deltaDistX);
-      else          perpWallDist = (sideDistY - deltaDistY);
+      if(side == 0)
+        perpWallDist = (sideDistX - deltaDistX);
+      else
+        perpWallDist = (sideDistY - deltaDistY);
 
-      //Calculate height of line to draw on screen
-      int lineHeight = (int)(1016 / perpWallDist);
-
-      //calculate lowest and highest pixel to fill in current stripe
-      int drawStart = -lineHeight / 2 + 1016 / 2;
-      if(drawStart < 0) drawStart = 0;
-      int drawEnd = lineHeight / 2 + 1016 / 2;
-      if(drawEnd >= 1016) drawEnd = 1016 - 1;
-
-      //give x and y sides different brightness
-      // if(side == 1) {color = color / 2;}
-
-      //draw the pixels of the stripe as a vertical line
-      int l = -1;
-      int k = -1;
-      int i = 16;
+      int lineHeight;
+      int drawStart;
+      int drawEnd;
+      int l;
+      int k;
+      int i;
       int pixel_value;
-      printf("%f\n", (double)(drawEnd - drawStart) / (double)(16 / 10));
-      // printf("calcul = %d\nl = %d\n", (drawEnd - drawStart) * ((16 - i / 16)), l);
+
+      lineHeight = (int)(1016 / perpWallDist);
+      drawStart = -lineHeight / 2 + 1016 / 2;
+      if(drawStart < 0)
+        drawStart = 0;
+      drawEnd = lineHeight / 2 + 1016 / 2;
+      if(drawEnd >= 1016)
+        drawEnd = 1016 - 1;
+      l = -1;
+      k = -1;
+        // mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, k, data->cc);
+      // mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, k, data->cf);
       while (++k < drawStart)
-        mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, k, data->cc);
+        (int)((data->window + k * data->line_bytes[0] / (data->pixel_bits[0] / 8)) + x) = data->cc;
       while (drawStart + ++l < drawEnd)
       {
         if (l >= (drawEnd - drawStart) - ((drawEnd - drawStart) * (((16 - i)/ 16))))
@@ -123,9 +121,9 @@ int	raytracing(t_data *data)
       }
       k = drawEnd;
       while (++k < 1016)
-        mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, k, data->cf);
-      // verLine(x, drawStart, drawEnd, color);
-    draw_minimap(data);
+        (int)((data->window + k * data->line_bytes[0] / (data->pixel_bits[0] / 8)) + x) = data->cf;
+      mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img[0])
+      draw_minimap(data);
     }
     return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 17:48:03 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/27 16:07:10 by aproust          ###   ########.fr       */
+/*   Updated: 2023/11/30 17:48:33 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	key(int key, t_data *data)
 	moveSpeed = 0.083;
 	oldPlaneX = data->planeX;
 	oldDirX = data->dirX;
-	// printf("dirx:%f, diry:%f\nplaneX:%f, planeY:%f\n", data->dirX, data->dirY, data->planeX, data->planeY);
 	if (key == 65307)
 	{
 		free_all(data);
@@ -76,7 +75,7 @@ int	key(int key, t_data *data)
 	}
 	else if (key == 97)
 	{
-		if (data->map[(int)(data->posX - data->dirY * moveSpeed)][(int)(data->posY + data->dirX * moveSpeed)] == '0')
+		if (data->map[(int)(data->posX - data->dirY * moveSpeed)][(int)(data->posY + data->dirX * moveSpeed)] != '1')
 		{
 			data->posX -= data->dirY * moveSpeed;
 			data->posY += data->dirX * moveSpeed;
@@ -85,9 +84,3 @@ int	key(int key, t_data *data)
 	// raytracing(data);
 	return (0);
 }
-
-	/* if (key == 65361)
-		rotate_left(data);
-	if (key == 65363)
-		rotate_right(data);
-	browse_image(data); */
