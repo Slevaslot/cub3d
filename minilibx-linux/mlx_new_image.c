@@ -1,9 +1,9 @@
 /*
 ** mlx_new_image.c for MiniLibX in raytraceur
-** 
+**
 ** Made by Charlie Root
 ** Login   <ol@epitech.net>
-** 
+**
 ** Started on  Mon Aug 14 15:29:14 2000 Charlie Root
 ** Last update Wed May 25 16:46:31 2011 Olivier Crouzet
 */

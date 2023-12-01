@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_sequel.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 14:40:03 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/24 15:49:22 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/12/01 18:48:06 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	check_map(t_data *data, char **mp)
 					|| mp[j][i] == 'S')
 				{
 					data->player_dir = mp[j][i];
-					data->posX = j;
-					data->posY = i;
+					data->posx = j;
+					data->posy = i;
 					counter++;
 				}
 			}

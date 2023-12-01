@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracing copy.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:32:10 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/24 18:12:31 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:28:13 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int worldMap[mapWidth][mapHeight]=
 
 int	raytracing(t_data *data)
 {
-  double posX = 22, posY = 12;  //x and y start position
+  double posx = 22, posy = 12;  //x and y start position
   double dirX = -1, dirY = 0; //initial direction vector
   double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
 
@@ -63,8 +63,8 @@ int	raytracing(t_data *data)
       double rayDirX = dirX + planeX * cameraX;
       double rayDirY = dirY + planeY * cameraX;
       //which box of the map we're in
-      int mapX = (int)posX;
-      int mapY = (int)posY;
+      int mapX = (int)posx;
+      int mapY = (int)posy;
 
       //length of ray from current position to next x or y-side
       double sideDistX;
@@ -96,22 +96,22 @@ int	raytracing(t_data *data)
       if(rayDirX < 0)
       {
         stepX = -1;
-        sideDistX = (posX - mapX) * deltaDistX;
+        sideDistX = (posx - mapX) * deltaDistX;
       }
       else
       {
         stepX = 1;
-        sideDistX = (mapX + 1.0 - posX) * deltaDistX;
+        sideDistX = (mapX + 1.0 - posx) * deltaDistX;
       }
       if(rayDirY < 0)
       {
         stepY = -1;
-        sideDistY = (posY - mapY) * deltaDistY;
+        sideDistY = (posy - mapY) * deltaDistY;
       }
       else
       {
         stepY = 1;
-        sideDistY = (mapY + 1.0 - posY) * deltaDistY;
+        sideDistY = (mapY + 1.0 - posy) * deltaDistY;
       }
       //perform DDA
       while(hit == 0)
@@ -134,7 +134,7 @@ int	raytracing(t_data *data)
       }
       //Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
       //hit to the camera plane. Euclidean to center camera point would give fisheye effect!
-      //This can be computed as (mapX - posX + (1 - stepX) / 2) / rayDirX for side == 0, or same formula with Y
+      //This can be computed as (mapX - posx + (1 - stepX) / 2) / rayDirX for side == 0, or same formula with Y
       //for size == 1, but can be simplified to the code below thanks to how sideDist and deltaDist are computed:
       //because they were left scaled to |rayDir|. sideDist is the entire length of the ray above after the multiple
       //steps, but we subtract deltaDist once because one step more into the wall was taken above.
@@ -142,12 +142,12 @@ int	raytracing(t_data *data)
       else          perpWallDist = (sideDistY - deltaDistY);
 
       //Calculate height of line to draw on screen
-      int lineHeight = (int)(540 / perpWallDist);
+      int lineheight = (int)(540 / perpWallDist);
 
       //calculate lowest and highest pixel to fill in current stripe
-      int drawStart = -lineHeight / 2 + 540 / 2;
-      if(drawStart < 0) drawStart = 0;
-      int drawEnd = lineHeight / 2 + 540 / 2;
+      int drawstart = -lineheight / 2 + 540 / 2;
+      if(drawstart < 0) drawstart = 0;
+      int drawEnd = lineheight / 2 + 540 / 2;
       if(drawEnd >= 540) drawEnd = 540 - 1;
 
       //choose wall color
@@ -166,11 +166,11 @@ int	raytracing(t_data *data)
 
       //draw the pixels of the stripe as a vertical line
       int l = -1;
-      while (drawStart + ++l < drawEnd)
+      while (drawstart + ++l < drawEnd)
       {
-        mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, drawStart + l, 0xFF0000);
+        mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, drawstart + l, 0xFF0000);
       }
-      // verLine(x, drawStart, drawEnd, color);
+      // verLine(x, drawstart, drawEnd, color);
     }
 
     /* //speed modifiers
@@ -180,14 +180,14 @@ int	raytracing(t_data *data)
     //move forward if no wall in front of you
     if(keyDown(SDLK_UP))
     {
-      if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
-      if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
+      if(worldMap[int(posx + dirX * moveSpeed)][int(posy)] == false) posx += dirX * moveSpeed;
+      if(worldMap[int(posx)][int(posy + dirY * moveSpeed)] == false) posy += dirY * moveSpeed;
     }
     //move backwards if no wall behind you
     if(keyDown(SDLK_DOWN))
     {
-      if(worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false) posX -= dirX * moveSpeed;
-      if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
+      if(worldMap[int(posx - dirX * moveSpeed)][int(posy)] == false) posx -= dirX * moveSpeed;
+      if(worldMap[int(posx)][int(posy - dirY * moveSpeed)] == false) posy -= dirY * moveSpeed;
     }
     //rotate to the right
     if(keyDown(SDLK_RIGHT))

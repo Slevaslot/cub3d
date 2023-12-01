@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/30 19:48:30 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/01 19:02:42 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,16 @@
 
 void	get_texture(t_data *data)
 {
-	int	w;
-	int	h;
-	int	edian;
-
 	data->addr = ft_calloc(sizeof(char *), 5);
 	data->img = ft_calloc(sizeof(void *), 5);
-	data->img[0] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[0], &w, &h);
-	data->img[1] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[1], &w, &h);
-	data->img[2] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[2], &w, &h);
-	data->img[3] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[3], &w, &h);
-	data->addr[0] = mlx_get_data_addr(data->img[0], &data->pixel_bits[0], &data->line_bytes[0], &edian);
-	data->addr[1] = mlx_get_data_addr(data->img[1], &data->pixel_bits[1], &data->line_bytes[1], &edian);
-	data->addr[2] = mlx_get_data_addr(data->img[2], &data->pixel_bits[2], &data->line_bytes[2], &edian);
-	data->addr[3] = mlx_get_data_addr(data->img[3], &data->pixel_bits[3], &data->line_bytes[3], &edian);
+	data->img[0] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[0], &data->w, &data->h);
+	data->img[1] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[1], &data->w, &data->h);
+	data->img[2] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[2], &data->w, &data->h);
+	data->img[3] = mlx_xpm_file_to_image(data->mlx_ptr, data->txtr[3], &data->w, &data->h);
+	data->addr[0] = mlx_get_data_addr(data->img[0], &data->pixel_bits[1], &data->line_bytes[1], &data->edian[1]);
+	data->addr[1] = mlx_get_data_addr(data->img[1], &data->pixel_bits[2], &data->line_bytes[2], &data->edian[2]);
+	data->addr[2] = mlx_get_data_addr(data->img[2], &data->pixel_bits[3], &data->line_bytes[3], &data->edian[3]);
+	data->addr[3] = mlx_get_data_addr(data->img[3], &data->pixel_bits[4], &data->line_bytes[4], &data->edian[4]);
 }
 
 void	found_player_dir(t_data *data)
@@ -77,9 +73,10 @@ int	start_program(char *map_name, t_data *data)
 	data->win_ptr = mlx_new_window(data->mlx_ptr, 1920, 1016, "Cub3d");
 	map_init(data, map_name);
 	found_player_dir(data);
-	get_texture(data);
 	data->image_mini = mlx_new_image(data->mlx_ptr, 100, 100);
 	data->window = mlx_new_image(data->mlx_ptr, 1920, 1016);
+	data->win_addr = mlx_get_data_addr(data->window, &data->pixel_bits[0], &data->line_bytes[0], &data->edian[0]);
+	get_texture(data);
 	mlx_hook(data->win_ptr, 17, 0, close_window, data);
 	mlx_hook(data->win_ptr, 2, 1L << 0, key, data);
 	mlx_loop_hook(data->mlx_ptr, raytracing, data);

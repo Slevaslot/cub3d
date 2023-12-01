@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+
 typedef struct t_data
 {
 	int		i;
@@ -26,8 +27,8 @@ typedef struct t_data
 	int		*c_color;
 	int		cc;
 	int		cf;
-	float	posX;
-	float	posY;
+	float	posx;
+	float	posy;
 	int		key_pressed;
 	double	dirX;
 	double	dirY;
@@ -38,8 +39,17 @@ typedef struct t_data
 	void	*image_mini;
 	char	*addrformini;
 	void	*window;
-	int		pixel_bits[4];
-	int		line_bytes[4];
+	char	*win_addr;
+	int		drawstart;
+	int		pixel_bits[5];
+	int		line_bytes[5];
+	int		edian[5];
+	double	step;
+	int		w;
+	int		h;
+	int		texx;
+	int		texy;
+	int		texpos;
 } t_data;
 
 /* close key */
