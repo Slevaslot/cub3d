@@ -50,6 +50,13 @@ typedef struct t_data
 	int		texx;
 	int		texy;
 	int		texpos;
+	double deltaDistY;
+	double deltaDistX;
+	int    side;
+	double sideDistY;
+	double sideDistX;
+	double raydiry;
+	double raydirx;
 } t_data;
 
 /* close key */
