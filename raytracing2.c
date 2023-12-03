@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raytracing.c                                       :+:      :+:    :+:   */
+/*   raytracing2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:32:10 by aproust           #+#    #+#             */
-/*   Updated: 2023/12/01 20:14:16 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/03 17:17:20 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,54 +142,56 @@ int	raytracing(t_data *data)
         drawEnd = 1016 - 1;
 
 	    if (side == 0 && raydirx < 0)
-	    	texdir = 1;
+	    	texdir = 0;
 	    else if (side == 0 && raydirx >= 0)
-	    	texdir = 2;
+	    	texdir = 1;
 	    else if (side == 1 && raydiry < 0)
-	    	texdir = 3;
+	    	texdir = 2;
 	    else if (side == 1 && raydiry >= 0)
-	    	texdir = 4;
-	    else if (side == 0)
+	    	texdir = 3;
+	    if (side == 0)
 	    	wallx = data->posy + perpwalldist * raydiry;
 	    else
 	    	wallx = data->posx + perpwalldist * raydirx;
 	    wallx -= floor((wallx));
-      	y = data->drawstart - 1;
+      y = data->drawstart - 1;
 	    data->step = 1.0 * data->h / lineheight;
 	    data->texx = (int)(wallx * (double)data->w);
 	    if (side == 0 && raydirx > 0)
 	    	data->texx = data->w - data->texx - 1;
 	    if (side == 1 && raydiry < 0)
 	    	data->texx = data->w - data->texx - 1;
-	    data->texpos = (data->drawstart - 1016 / 2 +
-	    		lineheight / 2) * data->step;
+      // dprintf(2, "texdir%d texx%d\n", texdir, data->texx);
+	    data->texpos = (data->drawstart - 1016 / 2 + lineheight / 2) * data->step;
       k = -1;
       while (++k < data->drawstart)
       {
+        printf("%d ", k);
           pixel_index = k * data->line_bytes[0] + x * (data->pixel_bits[0] / 8);
-          data->win_addr[pixel_index] = (data->cc >> 16) & 0xFF;
-          data->win_addr[pixel_index + 1] = (data->cc >> 8) & 0xFF;
-          data->win_addr[pixel_index + 2] = data->cc & 0xFF;
+          data->win_addr[pixel_index] = (data->cc >> 16);
+          data->win_addr[pixel_index + 1] = (data->cc >> 8);
+          data->win_addr[pixel_index + 2] = data->cc;
       }
 	    while (++y <= drawEnd)
 	    {
+        printf("%d ", y);
 	    	data->texy = (int)data->texpos & (64 - 1);
 	    	data->texpos += data->step;
-        y++;
-	    	data->addr[texdir][y * data->line_bytes[texdir] + x * (data->pixel_bits[0] / 8)] =
-	    			data->addr[texdir][data->texy * data->line_bytes[texdir] + data->texx * (data->pixel_bits[0] / 8)];
+	    	data->win_addr[y * data->line_bytes[texdir] + x * (data->pixel_bits[0] / 8)] =
+	    			data->addr[texdir][64 * data->texy + data->texx];
 	    }
       k = drawEnd;
       while (++k < 1016)
       {
+        printf("%d ", k);
           pixel_index = k * data->line_bytes[0] + x * (data->pixel_bits[0] / 8);
-          data->win_addr[pixel_index] = (data->cf >> 16) & 0xFF;
-          data->win_addr[pixel_index + 1] = (data->cf >> 8) & 0xFF;
-          data->win_addr[pixel_index + 2] = data->cf & 0xFF;
+          data->win_addr[pixel_index] = (data->cf >> 16);
+          data->win_addr[pixel_index + 1] = (data->cf >> 8);
+          data->win_addr[pixel_index + 2] = data->cf;
       }
       }
       mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->window, 0, 0);
-      draw_minimap(data);
+      // draw_minimap(data);
       return (1);
 }
 
