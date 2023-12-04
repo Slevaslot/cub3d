@@ -2,13 +2,14 @@
 # define CUB3D_H
 
 #include "minilibx-linux/mlx.h"
-#include "minilibx_opengl_20191021/mlx.h"
 #include "libft_gnl/libft_gnl.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <math.h>
 
+#define HEIGHT 1920
+#define WIDTH 1080
 
 typedef struct t_data
 {

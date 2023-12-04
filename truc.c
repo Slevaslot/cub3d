@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:16:04 by aproust           #+#    #+#             */
-/*   Updated: 2023/12/01 18:48:06 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/04 17:34:22 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ void	browse_char(t_data *data, char c, int *j)
 
 int	alloc_img(t_data *data)
 {
-	data->img2 = malloc(sizeof(void *) * 1016);
+	data->img2 = malloc(sizeof(void *) * WIDTH);
 	if (!data->img2)
 		return (1);
 	return (0);

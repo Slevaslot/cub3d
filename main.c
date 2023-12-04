@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/01 19:02:42 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/04 17:45:28 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,29 @@ void	get_texture(t_data *data)
 	data->addr[1] = mlx_get_data_addr(data->img[1], &data->pixel_bits[2], &data->line_bytes[2], &data->edian[2]);
 	data->addr[2] = mlx_get_data_addr(data->img[2], &data->pixel_bits[3], &data->line_bytes[3], &data->edian[3]);
 	data->addr[3] = mlx_get_data_addr(data->img[3], &data->pixel_bits[4], &data->line_bytes[4], &data->edian[4]);
+}
+
+int	check_texture(t_data *data)
+{
+	int	fd[4];
+
+	fd[0] = open(data->txtr[0], 0);
+	if (fd[0] < 0)
+		return (1);
+	fd[1] = open(data->txtr[1], 0);
+	if (fd[1] < 0)
+		return (close(fd[0]), 1);
+	fd[2] = open(data->txtr[2], 0);
+	if (fd[2] < 0)
+		return (close(fd[0]), close(fd[1]), 1);
+	fd[3] = open(data->txtr[3], 0);
+	if (fd[3] < 0)
+		return (close(fd[0]), close(fd[1]), close(fd[2]), 1);
+	close(fd[0]);
+	close(fd[1]);
+	close(fd[2]);
+	close(fd[3]);
+	return (0);
 }
 
 void	found_player_dir(t_data *data)
@@ -70,11 +93,13 @@ int	start_program(char *map_name, t_data *data)
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		return (-1);
-	data->win_ptr = mlx_new_window(data->mlx_ptr, 1920, 1016, "Cub3d");
+	data->win_ptr = mlx_new_window(data->mlx_ptr, HEIGHT, WIDTH, "Cub3d");
 	map_init(data, map_name);
 	found_player_dir(data);
+	if (check_texture(data))
+		return (printf("Error: texture file does not exist\n"), free_all(data), 1);
 	data->image_mini = mlx_new_image(data->mlx_ptr, 100, 100);
-	data->window = mlx_new_image(data->mlx_ptr, 1920, 1016);
+	data->window = mlx_new_image(data->mlx_ptr, HEIGHT, WIDTH);
 	data->win_addr = mlx_get_data_addr(data->window, &data->pixel_bits[0], &data->line_bytes[0], &data->edian[0]);
 	get_texture(data);
 	mlx_hook(data->win_ptr, 17, 0, close_window, data);
@@ -117,6 +142,8 @@ int	main(int ac, char **av)
 		data.map = 0;
 		data.addr = 0;
 		data.img = 0;
+		data.window = 0;
+		data.image_mini = 0;
 		data.txtr = ft_calloc(sizeof(char *), 7);
 		if (!data.txtr)
 			return (1);
