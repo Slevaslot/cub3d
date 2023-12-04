@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/04 17:45:28 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/04 18:56:16 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,6 @@ int	main(int ac, char **av)
 			return (1);
 		if (start_program(av[1], &data) < 0)
 			return (exit_all());
-
 	}
 	else
 		return (printf("Error : too much parameter\n"), 1);

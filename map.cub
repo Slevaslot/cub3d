@@ -1,11 +1,11 @@
 
 
-NO img/tes.xpm
+NO img/redbrick.xpm
 
-SO img/S.xpm
+SO img/redbrick.xpm
 
-WE       img/W.xpm
-EA img/E.xpm
+WE       img/redbrick.xpm
+EA img/redbrick.xpm
 
 F 42,42,42
 

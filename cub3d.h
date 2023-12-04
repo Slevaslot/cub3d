@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define HEIGHT 1920
-#define WIDTH 1080
+#define HEIGHT 1680
+#define WIDTH 680
 
 typedef struct t_data
 {
@@ -50,7 +50,7 @@ typedef struct t_data
 	int		h;
 	int		texx;
 	int		texy;
-	int		texpos;
+	double	texpos;
 	double deltaDistY;
 	double deltaDistX;
 	int    side;

@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:32:10 by aproust           #+#    #+#             */
-/*   Updated: 2023/12/04 17:48:45 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/04 18:27:59 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ int	raytracing(t_data *data)
     int    side;
 
     x = 0;
-    while (x++ < 1920)
+    while (x++ < HEIGHT)
     {
-      cameraX = 2 * x / (double)1920 - 1;
+      cameraX = 2 * x / (double)HEIGHT - 1;
       raydirx = data->dirX + data->planeX * cameraX;
       raydiry = data->dirY + data->planeY * cameraX;
       mapY = (int)data->posy;
@@ -132,13 +132,13 @@ int	raytracing(t_data *data)
       else
         perpwalldist = (sideDistY - deltaDistY);
 
-      lineheight = (int)(1016 / perpwalldist);
-      data->drawstart = -lineheight / 2 + 1016 / 2;
+      lineheight = (int)(WIDTH / perpwalldist);
+      data->drawstart = -lineheight / 2 + WIDTH / 2;
       if(data->drawstart < 0)
         data->drawstart = 0;
-      drawEnd = lineheight / 2 + 1016 / 2;
-      if(drawEnd >= 1016)
-        drawEnd = 1016 - 1;
+      drawEnd = lineheight / 2 + WIDTH / 2;
+      if(drawEnd >= WIDTH)
+        drawEnd = WIDTH - 1;
 
 	    if (side == 0 && raydirx < 0)
 	    	texdir = 0;
@@ -159,7 +159,7 @@ int	raytracing(t_data *data)
 	    	data->texx = data->w - data->texx - 1;
 	    if (side == 1 && raydiry < 0)
 	    	data->texx = data->w - data->texx - 1;
-	    data->texpos = (data->drawstart - 1016 / 2 + lineheight / 2) * data->step;
+	    data->texpos = (data->drawstart - WIDTH / 2 + lineheight / 2) * data->step;
       k = -1;
       while (++k < data->drawstart)
       {
@@ -170,13 +170,14 @@ int	raytracing(t_data *data)
       }
 	    while (++k < drawEnd)
 	    {
-	    	data->texy = (int)data->texpos & (64 - 1);
+	    	data->texy = (int)data->texpos & (data->h - 1);
 	    	data->texpos += data->step;
+		    // dprintf(2, "%d * %d + %d\n", data->h, data->texy, data->texx);
 	    	data->win_addr[k * data->line_bytes[0] + x * (data->pixel_bits[0] / 8)] =
-	    			data->addr[texdir][64 * data->texy + data->texx];
+	    			data->addr[texdir][data->h * data->texy + data->texx];
 	    }
       k = drawEnd;
-      while (++k < 1016)
+      while (++k < WIDTH)
       {
           pixel_index = k * data->line_bytes[0] + x * (data->pixel_bits[0] / 8);
           data->win_addr[pixel_index] = (data->cf >> 16);
@@ -185,7 +186,7 @@ int	raytracing(t_data *data)
       }
       }
       mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->window, 0, 0);
-      // draw_minimap(data);
+      draw_minimap(data);
       return (1);
 }
 
