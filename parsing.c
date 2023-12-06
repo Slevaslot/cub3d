@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 17:28:05 by aproust           #+#    #+#             */
-/*   Updated: 2023/11/27 15:06:23 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/06 17:49:00 by slevaslo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,9 @@ int	parse_for_texture2(t_data *data, int i, int j)
 	while (data->file[i][++j])
 	{
 		if (data->file[i][j] != ' ' && data->file[i][j] != 'W')
+		{
 			return (1);
+		}
 		if (data->file[i][j] == 'W')
 		{
 			if (data->file[i][++j] && data->file[i][j] == 'E'
@@ -189,7 +191,9 @@ int	parse_for_texture(t_data *data, char c, int i, int j)
 	else if (c == 'W')
 	{
 		if (parse_for_texture2(data, i, j))
+		{
 			return (1);
+		}
 	}
 	else if (c == 'E')
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracing3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:32:10 by aproust           #+#    #+#             */
-/*   Updated: 2023/12/04 18:27:59 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/06 17:07:15 by slevaslo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,20 +109,20 @@ int	raytracing(t_data *data)
           mapY += stepY;
           side = 1;
         }
-        //Check if ray has hit a wall
+        //Checy if ray has hit a wall
         if(data->map[mapX][mapY] == '1')
           hit = 1;
       }
       //Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
       //hit to the camera plane. Euclidean to center camera point would give fisheye effect!
       //This can be computed as (mapX - data->posx + (1 - stepX) / 2) / raydirx for side == 0, or same formula with Y
-      //for size == 1, but can be simplified to the code below thanks to how sideDist and deltaDist are computed:
+      //for size == 1, but can be simplified to the code below thanys to how sideDist and deltaDist are computed:
       //because they were left scaled to |rayDir|. sideDist is the entire length of the ray above after the multiple
-      //steps, but we subtract deltaDist once because one step more into the wall was taken above.
+      //steps, but we subtract deltaDist once because one step more into the wall was tayen above.
       double  perpwalldist;
       int     lineheight;
       int     drawEnd;
-      int     k;
+      int     y;
       int     pixel_index;
       double  wallx;
       int     texdir;
@@ -160,26 +160,27 @@ int	raytracing(t_data *data)
 	    if (side == 1 && raydiry < 0)
 	    	data->texx = data->w - data->texx - 1;
 	    data->texpos = (data->drawstart - WIDTH / 2 + lineheight / 2) * data->step;
-      k = -1;
-      while (++k < data->drawstart)
+      y = -1;
+      while (++y < data->drawstart)
       {
-          pixel_index = k * data->line_bytes[0] + x * (data->pixel_bits[0] / 8);
+          pixel_index = y * data->line_bytes[0] + x * (data->pixel_bits[0] / 8);
           data->win_addr[pixel_index] = (data->cc >> 16);
           data->win_addr[pixel_index + 1] = (data->cc >> 8);
           data->win_addr[pixel_index + 2] = data->cc;
       }
-	    while (++k < drawEnd)
+	    while (++y < drawEnd)
 	    {
 	    	data->texy = (int)data->texpos & (data->h - 1);
 	    	data->texpos += data->step;
 		    // dprintf(2, "%d * %d + %d\n", data->h, data->texy, data->texx);
-	    	data->win_addr[k * data->line_bytes[0] + x * (data->pixel_bits[0] / 8)] =
-	    			data->addr[texdir][data->h * data->texy + data->texx];
+	    ft_memcpy(&data->win_addr[y * data->line_bytes[0] + x * (data->pixel_bits[0] / 8)], &data->addr[texdir][data->h * data->texy + data->texx], 4);
+      	// data->win_addr[y * data->line_bytes[0] + x * (data->pixel_bits[0] / 8)] =
+	    	// 		data->addr[texdir][data->h * data->texy + data->texx];
 	    }
-      k = drawEnd;
-      while (++k < WIDTH)
+      y = drawEnd;
+      while (++y < WIDTH)
       {
-          pixel_index = k * data->line_bytes[0] + x * (data->pixel_bits[0] / 8);
+          pixel_index = y * data->line_bytes[0] + x * (data->pixel_bits[0] / 8);
           data->win_addr[pixel_index] = (data->cf >> 16);
           data->win_addr[pixel_index + 1] = (data->cf >> 8);
           data->win_addr[pixel_index + 2] = data->cf;
@@ -190,8 +191,8 @@ int	raytracing(t_data *data)
       return (1);
 }
 
-        // *(int *)((data->win_addr + (x * data->line_bytes[0] / (data->pixel_bits[0] / 8)) + (k) * (data->pixel_bits[0] / 8)))  = data->cc;
+        // *(int *)((data->win_addr + (x * data->line_bytes[0] / (data->pixel_bits[0] / 8)) + (y) * (data->pixel_bits[0] / 8)))  = data->cc;
         // *(int *)((data->win_addr + (x * data->line_bytes[0] / (data->pixel_bits[0] / 8)) + (l) * (data->pixel_bits[0] / 8))) = 0xFF0000;
-        // *(int *)((data->win_addr + (x * data->line_bytes[0] / (data->pixel_bits[0] / 8)) + (k) * (data->pixel_bits[0] / 8))) = data->cf;
+        // *(int *)((data->win_addr + (x * data->line_bytes[0] / (data->pixel_bits[0] / 8)) + (y) * (data->pixel_bits[0] / 8))) = data->cf;
       // printf("line_bytes:%d et pixel_bits:%d\n", data->line_bytes[0], data->pixel_bits[0]);
       // mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->window, 0, 0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:37 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/11/27 14:11:34 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/06 18:06:30 by slevaslo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,48 +59,73 @@ int	parse_map(char *str)
 	return (0);
 }
 
+char	which_char(t_data *data, int i)
+{
+
+	// int nb_of_dir = 0;
+	int j = 0;
+	while(data->file[i][j] == ' ')
+		j++;
+	if (data->file[i][j] == 'N')
+		return ('N');
+	else if (data->file[i][j] == 'S')
+		return ('S');
+	else if (data->file[i][j] == 'W')
+		return ('W');
+	else if (data->file[i][j] == 'E')
+		return ('E');
+	else
+		return ('F');
+}
+
+int	get_floor_and_ceiling(t_data *data, int i, int j)
+{
+	int	y = 0;
+	while(data->file[i][y] == ' ')
+		y++;
+	if (data->file[i][y] == 'F')
+	{
+		if (get_floor_color(data, i, j))
+			return (1);
+	}
+	else if (data->file[i][y] == 'C')
+	{
+		if (get_ceiling_color(data, i, j))
+			return (1);
+	}
+	else
+		return (1);
+	y = 0;
+	return (0);
+}
+
 int	parse_file(t_data *data)
 {
 	int	i;
 	int	j;
-
+	char	ch;
+	int nbr_of_wall = 0;
+	// int	nbr_of_floor = 0;
 	i = -1;
-	while (data->file[i + 1] && i < 5)
+	while (data->file[++i] && i <= 5)
 	{
-		i++;
 		j = -1;
-		if (i == 0)
+		if (nbr_of_wall <= 4)
+			ch = which_char(data, i);
+		// if (ch == 'F')
+		// 	return (1);
+		if ((nbr_of_wall <= 4) && ((ch == 'N') || (ch == 'S') || (ch == 'W') || (ch == 'E')))
 		{
-			if (parse_for_texture(data, 'N', i, j))
+			if (parse_for_texture(data, ch, i, j))
+			{
 				return (1);
+			}
+			nbr_of_wall++;
 		}
-		else if (i == 1)
-		{
-			if (parse_for_texture(data, 'S', i, j))
-				return (1);
-		}
-		else if (i == 2)
-		{
-			if (parse_for_texture(data, 'W', i, j))
-				return (1);
-		}
-		else if (i == 3)
-		{
-			if (parse_for_texture(data, 'E', i, j))
-				return (1);
-		}
-		else if (i == 4)
-		{
-			if (get_floor_color(data, i, j))
-				return (1);
-		}
-		else if (i == 5)
-		{
-			if (get_ceiling_color(data, i, j))
-				return (1);
-		}
+		else if (get_floor_and_ceiling(data, i, j))
+			return (1);
 	}
-	if (check_map(data, &data->file[i + 1]))
+	if (check_map(data, &data->file[i]))
 		return (1);
 	return (0);
 }
