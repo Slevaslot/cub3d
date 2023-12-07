@@ -6,35 +6,36 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:32:10 by aproust           #+#    #+#             */
-/*   Updated: 2023/12/07 14:50:09 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/07 17:38:14 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
   int	set_rgb(int rgb[3])
 {
-	return (rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
+	return (rgb[2] << 16 | rgb[1] << 8 | rgb[0]);
 }
 
 void	draw(t_data *data)
 {
-  int x;
-  int y;
+  // int x;
+  // int y;
 
-  x = 0;
-  while (x++ < HEIGHT)
-	{
-	  y = 0;
-		while (y++ < WIDTH)
-			data->win_addr[y * data->line_bytes[0] + x * (data->pixel_bits[0] / 8)] = data->buff[x][y];
-	}
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->window, 0, 0);
+  // x = -1;
+  // while (++x < HEIGHT)
+	// {
+	//   y = -1;
+	// 	while (++y < WIDTH)
+	// 		data->win_addr[x * data->line_bytes[0] + y * (data->pixel_bits[0] / 8)] = data->buff[x][y];
+	// }
+  // dprintf(2, "%d et %d\n", x * WIDTH, y);
+    mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->window, 0, 0);
 }
 
 void draw_minimap(t_data *data)
 {
-	float		x;
-	float		y;
+	float	x;
+	float	y;
 	int	pixel_bits;
 	int	line_bytes;
 	int	edian;
@@ -92,16 +93,17 @@ int	raytracing(t_data *data)
 		while (++j < WIDTH)
 			data->buff[i][j] = 0;
   }
-   x = 0;
-   while (x++ < HEIGHT)
+   x = -1;
+   while (++x < WIDTH)
    {
-     cameraX = 2 * x / (double)HEIGHT - 1;
+     cameraX = 2 * x / (double)WIDTH - 1;
      raydirx = data->dirX + data->planeX * cameraX;
      raydiry = data->dirY + data->planeY * cameraX;
      mapY = (int)data->posy;
      mapX = (int)data->posx;
      deltaDistX = fabs(1 / raydirx);
      deltaDistY = fabs(1 / raydiry);
+
      hit = 0;
      if(raydirx < 0)
      {
@@ -161,13 +163,13 @@ int	raytracing(t_data *data)
        perpwalldist = (mapX - data->posx + (1 - stepX) / 2) / raydirx;
      else
        perpwalldist = (mapY - data->posy + (1 - stepY) / 2) / raydiry;
-     lineheight = (int)(WIDTH / perpwalldist);
-     data->drawstart = -lineheight / 2 + WIDTH / 2;
+     lineheight = (int)(HEIGHT / perpwalldist);
+     data->drawstart = -lineheight / 2 + HEIGHT / 2;
      if(data->drawstart < 0)
        data->drawstart = 0;
-     drawEnd = lineheight / 2 + WIDTH / 2;
-     if(drawEnd >= WIDTH)
-       drawEnd = WIDTH - 1;
+     drawEnd = lineheight / 2 + HEIGHT / 2;
+     if(drawEnd >= HEIGHT)
+       drawEnd = HEIGHT - 1;
      if (side == 0 && raydirx < 0)
 	   	texdir = 0;
 	   else if (side == 0 && raydirx >= 0)
@@ -187,46 +189,58 @@ int	raytracing(t_data *data)
 	   	data->texx = data->w - data->texx - 1;
 	   if (side == 1 && raydiry < 0)
 	   	data->texx = data->w - data->texx - 1;
-	   data->texpos = (data->drawstart - WIDTH / 2 + lineheight / 2) * data->step;
+	   data->texpos = (data->drawstart - HEIGHT / 2 + lineheight / 2) * data->step;
      y = -1;
      while (++y < data->drawstart)
      {
-        // pixel_index = y * data->line_bytes[0] + x * (data->pixel_bits[0] / 8);
-        // data->win_addr[pixel_index] = (data->cc >> 16);
-        // data->win_addr[pixel_index + 1] = (data->cc >> 8);
-        // data->win_addr[pixel_index + 2] = data->cc;
-
       // pixel_index = set_rgb(data->c_color);
-      // ft_memcpy(&data->buff[x][y], &pixel_index, 4);
-        data->buff[x][y] = set_rgb(data->c_color);
-        // data->buff[x][y + 1] = (data->cf >> 8);
-        // data->buff[x][y + 2] = data->cf;
-        // data->buff[x][y] = data->cf >> 16 | data->cf >> 8 | data->cf;
+      pixel_index = y * data->line_bytes[0] + x * (data->pixel_bits[0] / 8);
+        data->win_addr[pixel_index] = (data->cc);
+        data->win_addr[pixel_index + 1] = (data->cc >> 8);
+        data->win_addr[pixel_index + 2] = (data->cc >> 16);
+        // printf("%d\n", set_rgb(data->c_color));
+        // printf("r:%d g:%d b:%d\n", data->c_color[2], data->c_color[1], data->c_color[0]);
+        // data->buff[y][x] = set_rgb(data->c_color);
+        // data->buff[y][x] = (data->cc >> 16);
+        // data->buff[x][y + 1] = (data->cc >> 8);
+        // data->buff[x][y + 2] = data->cc;
+      // ft_memcpy(&data->buff[y][x], &pixel_index, 4);
      }
 	   while (++y < drawEnd)
 	   {
 	   	data->texy = (int)data->texpos & (data->h - 1);
 	   	data->texpos += data->step;
-      // ft_memcpy(&data->buff[x][y], &data->addr[texdir][data->h * data->texy + data->texx], 4);
-      data->buff[x][y] = data->addr[texdir][data->h * data->texy + data->texx];
-      //  ft_memcpy(&data->win_addr[y * data->line_bytes[0] + x * (data->pixel_bits[0] / 8)], &data->addr[texdir][data->h * data->texy + data->texx], 4);
+      // ft_memcpy(&data->buff[y][x], &data->addr[texdir][data->h * data->texy + data->texx], 4);
+      // dprintf(2, "%d %d\n", x, y);
+      int color;
+      // printf("%d * %d + %d\n", data->h, data->texy, data->texx);
+      // if (data->texy == 63)
+      //   exit(0);
+      printf()
+      color = data->addr[texdir][data->h * data->texy + data->texx];
+      if (side == 1)
+			  color = (color >> 1) & 8355711;
+      // data->buff[y][x] = color;
+       ft_memcpy(&data->win_addr[y * data->line_bytes[0] + x * (data->pixel_bits[0] / 8)], &color, 4);
 	   	// data->win_addr[y * data->line_bytes[0] + x * (data->pixel_bits[0] / 8)] =
 	   	// 		data->addr[texdir][data->h * data->texy + data->texx];
 	   }
      y = drawEnd;
-     while (++y < WIDTH)
+     while (++y < HEIGHT)
      {
-      pixel_index = set_rgb(data->f_color);
-        data->buff[x][y] = set_rgb(data->f_color);
-      // ft_memcpy(&data->buff[x][y], &pixel_index, 4);
-      // pixel_index = y * data->line_bytes[0] + x * (data->pixel_bits[0] / 8);
-      // data->win_addr[pixel_index] = (data->cf >> 16);
-      // data->win_addr[pixel_index + 1] = (data->cf >> 8);
-      // data->win_addr[pixel_index + 2] = data->cf;
-        // data->buff[x][y] = (data->cf >> 16);
+
+      // pixel_index = set_rgb(data->f_color);
+        // printf("%d %d %d\n", data->f_color[0], data->f_color[1], data->f_color[2]);
+        // printf("r:%d g:%d b:%d\n", data->f_color[2], data->f_color[1], data->f_color[0]);
+      // data->buff[y][x] = set_rgb(data->f_color);
+      // ft_memcpy(&data->buff[y][x], &pixel_index, 4);
+      pixel_index = y * data->line_bytes[0] + x * (data->pixel_bits[0] / 8);
+      data->win_addr[pixel_index] = data->cf;
+      data->win_addr[pixel_index + 1] = (data->cf >> 8);
+      data->win_addr[pixel_index + 2] = (data->cf >> 16);
+        // data->buff[y][x] = (data->cf >> 16);
         // data->buff[x][y+ 1] = (data->cf >> 8);
         // data->buff[x][y + 2] = data->cf;
-        // data->buff[x][y] = data->cf << 16 | data->cf << 8 | data->cf;
      }
    }
 	  // mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image_mini, 0, 0);

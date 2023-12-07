@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/07 14:52:25 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/07 17:20:34 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,27 @@ void	found_player_dir(t_data *data)
 		data->dirX = -1;
 		data->dirY = 0;
 		data->planeX = 0;
-		data->planeY = 0.7;
+		data->planeY = 0.66;
 	}
 	else if (data->player_dir == 'S')
 	{
 		data->dirX = 1;
 		data->dirY = 0;
 		data->planeX = 0;
-		data->planeY = -0.7;
+		data->planeY = -0.66;
 	}
 	else if (data->player_dir == 'E')
 	{
 		data->dirX = 0;
 		data->dirY = 1;
-		data->planeX = 0.7;
+		data->planeX = 0.66;
 		data->planeY = 0;
 	}
 	else if (data->player_dir == 'W')
 	{
 		data->dirX = 0;
 		data->dirY = -1;
-		data->planeX = -0.7;
+		data->planeX = -0.66;
 		data->planeY = 0;
 	}
 }
@@ -96,17 +96,18 @@ int	start_program(char *map_name, t_data *data)
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		return (-1);
-	data->win_ptr = mlx_new_window(data->mlx_ptr, HEIGHT, WIDTH, "Cub3d");
+	data->win_ptr = mlx_new_window(data->mlx_ptr, WIDTH, HEIGHT, "Cub3d");
 	map_init(data, map_name);
 	found_player_dir(data);
 	if (check_texture(data))
 		return (printf("Error: texture file does not exist\n"), free_all(data), 1);
 	data->image_mini = mlx_new_image(data->mlx_ptr, 100, 100);
-	data->window = mlx_new_image(data->mlx_ptr, HEIGHT, WIDTH);
+	data->window = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
 	data->win_addr = mlx_get_data_addr(data->window, &data->pixel_bits[0], &data->line_bytes[0], &data->edian[0]);
 	data->buff = (int **)malloc(sizeof(int *) * (HEIGHT + 1));
 	while (++i < HEIGHT + 1)
-		data->buff[i] = (int *)malloc(sizeof(int) * (WIDTH + 3));
+		data->buff[i] = (int *)malloc(sizeof(int) * (WIDTH + 1));
+	// printf("i:%d\n", WIDTH);
 	get_texture(data);
 	mlx_hook(data->win_ptr, 17, 0, close_window, data);
 	mlx_hook(data->win_ptr, 2, 1L << 0, key, data);

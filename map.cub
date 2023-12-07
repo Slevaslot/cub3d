@@ -1,15 +1,15 @@
 
 
-NO img/redbrick.xpm
+NO img/test.xpm
 
-SO img/redbrick.xpm
+SO img/allez.xpm
 
-WE       img/redbrick.xpm
+WE       img/test1.xpm
 EA img/redbrick.xpm
 
-F 42,42,42
+F 69,69,69
 
-C 240,240,242
+C 240,240,240
 
  111111
 11010101

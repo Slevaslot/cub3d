@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define HEIGHT 1680
-#define WIDTH 680
+#define WIDTH 1680
+#define HEIGHT 680
 
 typedef struct t_data
 {
