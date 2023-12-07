@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 17:48:03 by aproust           #+#    #+#             */
-/*   Updated: 2023/12/04 17:19:41 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/07 14:54:35 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,35 +51,39 @@ int	key(int key, t_data *data)
 	}
 	else if (key == 119)
 	{
-		if(data->map[(int)(data->posx + data->dirX * moveSpeed)][(int)(data->posy + data->dirY * moveSpeed)] != '1')
-		{
+		if(data->map[(int)(data->posx + data->dirX * moveSpeed - 0.000001)]
+			[(int)(data->posy - 0.000001)] != '1')
 			data->posx += data->dirX * moveSpeed;
+		if (data->map[(int)(data->posx - 0.000001)]
+			[((int)(data->posy + data->dirY * moveSpeed - 0.000001))] != '1')
 			data->posy += data->dirY * moveSpeed;
-		}
 	}
 	else if (key == 115)
 	{
-		if (data->map[(int)(data->posx - data->dirX * moveSpeed)][(int)(data->posy - data->dirY * moveSpeed)] != '1')
-		{
+		if(data->map[(int)((data->posx - data->dirX * moveSpeed - 0.000001))]
+			[(int)(data->posy - 0.000001)] != '1')
 			data->posx -= data->dirX * moveSpeed;
+		if (data->map[(int)(data->posx - 0.000001)]
+			[((int)(data->posy - data->dirY * moveSpeed - 0.000001))] != '1')
 			data->posy -= data->dirY * moveSpeed;
-		}
 	}
 	else if (key == 100)
 	{
-		if (data->map[(int)(data->posx + data->dirY * moveSpeed)][(int)(data->posy - data->dirX * moveSpeed)] != '1')
-		{
-			data->posx += data->dirY * moveSpeed;
-			data->posy -= data->dirX * moveSpeed;
-		}
+		if(data->map[(int)((data->posx + data->dirY * moveSpeed - 0.000001))]
+			[(int)(data->posy)] != '1')
+			data->posx += data->dirY * moveSpeed - 0.000001;
+		if (data->map[(int)(data->posx)]
+			[((int)(data->posy - data->dirX * moveSpeed - 0.000001))] != '1')
+			data->posy -= data->dirX * moveSpeed - 0.000001;
 	}
 	else if (key == 97)
 	{
-		if (data->map[(int)(data->posx - data->dirY * moveSpeed)][(int)(data->posy + data->dirX * moveSpeed)] != '1')
-		{
-			data->posx -= data->dirY * moveSpeed;
-			data->posy += data->dirX * moveSpeed;
-		}
+		if(data->map[(int)((data->posx - data->dirY * moveSpeed - 0.000001))]
+			[(int)(data->posy)] != '1')
+			data->posx -= data->dirY * moveSpeed - 0.000001;
+		if (data->map[(int)(data->posx)]
+			[((int)(data->posy + data->dirX * moveSpeed - 0.000001))] != '1')
+			data->posy += data->dirX * moveSpeed - 0.000001;
 	}
 	// raytracing(data);
 	return (0);

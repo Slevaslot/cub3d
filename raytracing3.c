@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:32:10 by aproust           #+#    #+#             */
-/*   Updated: 2023/12/06 20:40:13 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/07 14:50:09 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,8 @@ int	raytracing(t_data *data)
      double  wallx;
      int     texdir;
      int     pixel_index;
+
+     (void)pixel_index;
      if(side == 0)
        perpwalldist = (mapX - data->posx + (1 - stepX) / 2) / raydirx;
      else
@@ -194,9 +196,9 @@ int	raytracing(t_data *data)
         // data->win_addr[pixel_index + 1] = (data->cc >> 8);
         // data->win_addr[pixel_index + 2] = data->cc;
 
-      pixel_index = set_rgb(data->c_color);
-      ft_memcpy(&data->buff[x][y], &pixel_index, 4);
-        // data->buff[x][y] = set_rgb(data->c_color);
+      // pixel_index = set_rgb(data->c_color);
+      // ft_memcpy(&data->buff[x][y], &pixel_index, 4);
+        data->buff[x][y] = set_rgb(data->c_color);
         // data->buff[x][y + 1] = (data->cf >> 8);
         // data->buff[x][y + 2] = data->cf;
         // data->buff[x][y] = data->cf >> 16 | data->cf >> 8 | data->cf;
@@ -205,8 +207,8 @@ int	raytracing(t_data *data)
 	   {
 	   	data->texy = (int)data->texpos & (data->h - 1);
 	   	data->texpos += data->step;
-      ft_memcpy(&data->buff[x][y], &data->addr[texdir][data->h * data->texy + data->texx], 4);
-      // data->buff[x][y] = data->addr[texdir][data->h * data->texy + data->texx];
+      // ft_memcpy(&data->buff[x][y], &data->addr[texdir][data->h * data->texy + data->texx], 4);
+      data->buff[x][y] = data->addr[texdir][data->h * data->texy + data->texx];
       //  ft_memcpy(&data->win_addr[y * data->line_bytes[0] + x * (data->pixel_bits[0] / 8)], &data->addr[texdir][data->h * data->texy + data->texx], 4);
 	   	// data->win_addr[y * data->line_bytes[0] + x * (data->pixel_bits[0] / 8)] =
 	   	// 		data->addr[texdir][data->h * data->texy + data->texx];
@@ -215,8 +217,8 @@ int	raytracing(t_data *data)
      while (++y < WIDTH)
      {
       pixel_index = set_rgb(data->f_color);
-        // data->buff[x][y] = set_rgb(data->f_color);
-      ft_memcpy(&data->buff[x][y], &pixel_index, 4);
+        data->buff[x][y] = set_rgb(data->f_color);
+      // ft_memcpy(&data->buff[x][y], &pixel_index, 4);
       // pixel_index = y * data->line_bytes[0] + x * (data->pixel_bits[0] / 8);
       // data->win_addr[pixel_index] = (data->cf >> 16);
       // data->win_addr[pixel_index + 1] = (data->cf >> 8);

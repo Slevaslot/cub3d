@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/04 18:56:16 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/07 14:52:25 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,9 @@ int	ez(int key, t_data *data)
 
 int	start_program(char *map_name, t_data *data)
 {
+	int i;
+
+	i = -1;
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		return (-1);
@@ -101,6 +104,9 @@ int	start_program(char *map_name, t_data *data)
 	data->image_mini = mlx_new_image(data->mlx_ptr, 100, 100);
 	data->window = mlx_new_image(data->mlx_ptr, HEIGHT, WIDTH);
 	data->win_addr = mlx_get_data_addr(data->window, &data->pixel_bits[0], &data->line_bytes[0], &data->edian[0]);
+	data->buff = (int **)malloc(sizeof(int *) * (HEIGHT + 1));
+	while (++i < HEIGHT + 1)
+		data->buff[i] = (int *)malloc(sizeof(int) * (WIDTH + 3));
 	get_texture(data);
 	mlx_hook(data->win_ptr, 17, 0, close_window, data);
 	mlx_hook(data->win_ptr, 2, 1L << 0, key, data);
