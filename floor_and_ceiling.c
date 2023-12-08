@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floor_and_ceiling.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 18:47:37 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/08 18:47:38 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/12/08 19:10:48 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	get_floor_color(t_data *data, int i, int j)
 		}
 	}
 	if (!check_rgb_early(data->txtr[4], data, 0))
-		return (1);
+		return (free(data->txtr[4]), 1);
 	return (0);
 }
 

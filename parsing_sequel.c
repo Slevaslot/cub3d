@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_sequel.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 14:40:03 by aproust           #+#    #+#             */
-/*   Updated: 2023/12/08 18:46:58 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/12/08 19:15:07 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	z(char c)
 
 int	check_wall(char **mp, int i, int j)
 {
-	if (j == 0 || j == tab_size(mp) - 1)
+	if (j == 0 || j == tab_size(mp) - 1 || i == 0 || i == (int)ft_strlen(mp[j]))
 		return (0);
 	else if (z(mp[j][i]) && (mp[j][i - 1] && (mp[j][i - 1] == '1'
 				|| z(mp[j][i - 1])) && (mp[j][i + 1]) && (mp[j][i + 1] == '1'

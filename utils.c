@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:37:28 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/08 18:48:46 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/12/08 19:12:21 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	free_all(t_data *data)
 	int	i;
 
 	i = -1;
+	free2(data);
 	while (data->img && ++i < 4)
 	{
 		mlx_destroy_image(data->mlx_ptr, data->img[i]);
@@ -61,7 +62,8 @@ void	free_all(t_data *data)
 		free(data->buff[i]);
 	if (data->buff)
 		free(data->buff);
-	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	if (data->win_ptr)
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);
 }

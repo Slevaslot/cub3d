@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/08 16:05:26 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/12/08 19:12:13 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	ez(int key, t_data *data)
-{
-	if (key == 65293)
-		raytracing(data);
-	return (0);
-}
 
 int	start_program(char *map_name, t_data *data)
 {
@@ -27,7 +20,6 @@ int	start_program(char *map_name, t_data *data)
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		return (-1);
-	data->win_ptr = mlx_new_window(data->mlx_ptr, WIDTH, HEIGHT, "Cub3d");
 	data->buff = (int **)ft_calloc(sizeof(int *), (HEIGHT + 1));
 	while (++i < HEIGHT + 1)
 		data->buff[i] = (int *)ft_calloc(sizeof(int), (WIDTH + 1));
@@ -36,6 +28,7 @@ int	start_program(char *map_name, t_data *data)
 	if (check_texture(data))
 		return (printf("Error: texture file does not exist\n"),
 			free_all(data), 1);
+	data->win_ptr = mlx_new_window(data->mlx_ptr, WIDTH, HEIGHT, "Cub3d");
 	data->image_mini = mlx_new_image(data->mlx_ptr, 100, 100);
 	data->window = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
 	data->win_addr = mlx_get_data_addr(data->window, &data->pixel_bits[0],
@@ -43,7 +36,7 @@ int	start_program(char *map_name, t_data *data)
 	get_texture(data);
 	mlx_hook(data->win_ptr, 17, 0, close_window, data);
 	mlx_hook(data->win_ptr, 2, 1L << 0, key, data);
-	mlx_loop_hook(data->mlx_ptr, raytracing, data);
+	mlx_loop_hook(data->mlx_ptr, init_raytracing, data);
 	mlx_loop(data->mlx_ptr);
 	return (1);
 }
@@ -83,6 +76,7 @@ int	main(int ac, char **av)
 		data.img = 0;
 		data.window = 0;
 		data.image_mini = 0;
+		data.win_ptr = 0;
 		data.txtr = ft_calloc(sizeof(char *), 7);
 		if (!data.txtr)
 			return (1);
