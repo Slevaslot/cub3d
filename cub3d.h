@@ -57,6 +57,12 @@ typedef struct t_data
 	double	sideDistY;
 	double	sideDistX;
 	int		**buff;
+	double	oldplanex;
+	int		rgbi;
+	char	*check_rgb_number;
+	int		rgbj;
+	int		*check_rgb_nb;
+	int		counter;
 } t_data;
 
 /* close key */
@@ -75,5 +81,19 @@ int		get_ceiling_color(t_data *data, int i, int j);
 int		check_map(t_data *data, char **file);
 void	browse_image(t_data *data);
 int		raytracing(t_data *data);
+void	get_texture(t_data *data);
+int	check_texture(t_data *data);
 void	draw_minimap(t_data *data);
+void	est_west_dir(t_data *data);
+void	found_player_dir(t_data *data);
+int	parse_file(t_data *data);
+int	parse_map(char *str);
+int	get_floor_color(t_data *data, int i, int j);
+int	get_ceiling_color(t_data *data, int i, int j);
+char	*cj(char *str, char c, int param);
+int	check_rgb_fc(char *color, t_data *data, int param);
+int	check_rgb_early(char *color, t_data *data, int param);
+int	check_rgb_end(t_data *data, int param);
+int	find_longest_line(char **map);
+
 #endif

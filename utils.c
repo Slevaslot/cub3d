@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:37:28 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/08 15:20:33 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/08 18:48:46 by slevaslo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,8 @@ void	map_print(char **str)
 		dprintf(2, "%s\n", str[i]);
 }
 
-void	free_all(t_data *data)
+void	free2(t_data *data)
 {
-	int	i;
-
-	i = -1;
 	if (data->f_color)
 		free(data->f_color);
 	if (data->c_color)
@@ -40,6 +37,13 @@ void	free_all(t_data *data)
 	free_tab(data->file);
 	free_tab(data->map);
 	free_tab(data->txtr);
+}
+
+void	free_all(t_data *data)
+{
+	int	i;
+
+	i = -1;
 	while (data->img && ++i < 4)
 	{
 		mlx_destroy_image(data->mlx_ptr, data->img[i]);

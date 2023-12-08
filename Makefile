@@ -6,6 +6,11 @@ SRCS 	= main.c \
 		  parsing.c \
 		  parsing_sequel.c \
 		  raytracing.c\
+		  texture.c \
+		  found_direction.c \
+		  check_wall.c \
+		  floor_and_ceiling.c \
+		  check_rgb.c \
 
 OBJS 	= $(addprefix obj/,${SRCS:.c=.o} ${SRCS_LIBFT:.c=.o})
 LIBS = minilibx-linux/libmlx_Linux.a libft_gnl/libft_gnl.a -lXext -lX11 -lm

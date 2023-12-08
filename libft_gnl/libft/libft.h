@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdosso-d <pdosso-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 19:36:46 by pdosso-d          #+#    #+#             */
-/*   Updated: 2023/11/20 15:11:15 by pdosso-d         ###   ########.fr       */
+/*   Updated: 2023/12/08 18:38:07 by slevaslo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 void	free_tab(char **str);
 int		tab_size(char **str);
+
 
 #endif
