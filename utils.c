@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:37:28 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/07 16:00:09 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/08 15:20:33 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	free_all(t_data *data)
 	if (data->window)
 		mlx_destroy_image(data->mlx_ptr, data->window);
 	i = -1;
-	while (++i < HEIGHT + 1)
+	while (++i <= HEIGHT && data->buff[i])
 		free(data->buff[i]);
 	if (data->buff)
 		free(data->buff);

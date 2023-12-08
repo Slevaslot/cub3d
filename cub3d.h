@@ -36,7 +36,7 @@ typedef struct t_data
 	double	planeX;
 	double	planeY;
 	char	player_dir;
-	char	**addr;
+	int		**addr;
 	void	*image_mini;
 	char	*addrformini;
 	void	*window;
@@ -46,8 +46,8 @@ typedef struct t_data
 	int		line_bytes[5];
 	int		edian[5];
 	double	step;
-	int		w;
-	int		h;
+	int		w[0];
+	int		h[0];
 	int		texx;
 	int		texy;
 	double	texpos;

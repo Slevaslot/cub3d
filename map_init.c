@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:37 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/06 18:06:30 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:23:16 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ int	parse_map(char *str)
 
 char	which_char(t_data *data, int i)
 {
-
-	// int nb_of_dir = 0;
 	int j = 0;
 	while(data->file[i][j] == ' ')
 		j++;
@@ -105,15 +103,12 @@ int	parse_file(t_data *data)
 	int	j;
 	char	ch;
 	int nbr_of_wall = 0;
-	// int	nbr_of_floor = 0;
 	i = -1;
 	while (data->file[++i] && i <= 5)
 	{
 		j = -1;
 		if (nbr_of_wall <= 4)
 			ch = which_char(data, i);
-		// if (ch == 'F')
-		// 	return (1);
 		if ((nbr_of_wall <= 4) && ((ch == 'N') || (ch == 'S') || (ch == 'W') || (ch == 'E')))
 		{
 			if (parse_for_texture(data, ch, i, j))

@@ -1,13 +1,13 @@
 
 
-NO img/test.xpm
+NO img/N.xpm
 
-SO img/allez.xpm
-
-WE       img/test1.xpm
-EA img/redbrick.xpm
-
+SO img/S.xpm
 F 69,69,69
+
+WE       img/W.xpm
+EA img/E.xpm
+
 
 C 240,240,240
 

@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 17:48:03 by aproust           #+#    #+#             */
-/*   Updated: 2023/12/07 14:54:35 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/08 15:22:59 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,5 @@ int	key(int key, t_data *data)
 			[((int)(data->posy + data->dirX * moveSpeed - 0.000001))] != '1')
 			data->posy += data->dirX * moveSpeed - 0.000001;
 	}
-	// raytracing(data);
 	return (0);
 }
