@@ -1,4 +1,4 @@
-PROG	= cub3d
+PROG	= cub3D
 SRCS 	= main.c \
 		  key.c \
 		  utils.c \

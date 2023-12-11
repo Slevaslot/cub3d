@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/08 19:12:13 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/11 18:25:24 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	start_program(char *map_name, t_data *data)
 	i = -1;
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
-		return (-1);
+		return (printf("Error no environment\n"), free(data->txtr), -1);
 	data->buff = (int **)ft_calloc(sizeof(int *), (HEIGHT + 1));
 	while (++i < HEIGHT + 1)
 		data->buff[i] = (int *)ft_calloc(sizeof(int), (WIDTH + 1));
@@ -39,11 +39,6 @@ int	start_program(char *map_name, t_data *data)
 	mlx_loop_hook(data->mlx_ptr, init_raytracing, data);
 	mlx_loop(data->mlx_ptr);
 	return (1);
-}
-
-int	exit_all(void)
-{
-	exit(0);
 }
 
 int	check_arg(char *av)
@@ -81,7 +76,7 @@ int	main(int ac, char **av)
 		if (!data.txtr)
 			return (1);
 		if (start_program(av[1], &data) < 0)
-			return (exit_all());
+			exit(2);
 	}
 	else
 		return (printf("Error : too much parameter\n"), 1);

@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 17:36:35 by aproust           #+#    #+#             */
-/*   Updated: 2023/12/08 19:05:10 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/11 18:14:43 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	draw_value_init(t_data *data)
 	if (data->drawend >= HEIGHT)
 		data->drawend = HEIGHT - 1;
 	if (data->side == 0 && data->raydirx < 0)
-		data->texdir = 0;
-	else if (data->side == 0 && data->raydirx >= 0)
 		data->texdir = 1;
+	else if (data->side == 0 && data->raydirx >= 0)
+		data->texdir = 0;
 	else if (data->side == 1 && data->raydiry < 0)
-		data->texdir = 2;
-	else if (data->side == 1 && data->raydiry >= 0)
 		data->texdir = 3;
+	else if (data->side == 1 && data->raydiry >= 0)
+		data->texdir = 2;
 	if (data->side == 0)
 		data->wallx = data->posy + data->perpwalldist * data->raydiry;
 	else
