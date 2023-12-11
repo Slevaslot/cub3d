@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:32:10 by aproust           #+#    #+#             */
-/*   Updated: 2023/12/08 19:17:53 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/11 14:24:40 by slevaslo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,5 @@ int	init_raytracing(t_data *data)
 		raytracing(data, x);
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->window, 0, 0);
-	draw_minimap(data);
 	return (1);
 }

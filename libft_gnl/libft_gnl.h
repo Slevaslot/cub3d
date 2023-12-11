@@ -6,12 +6,12 @@
 /*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:24:50 by pdosso-d          #+#    #+#             */
-/*   Updated: 2023/11/15 01:57:56 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:25:58 by slevaslo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTFGNL_H
-# define LIBFTPRINTFGNL_H
+#ifndef LIBFT_GNL_H
+# define LIBFT_GNL_H
 
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
