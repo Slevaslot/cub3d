@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:37:28 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/08 19:12:21 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/12 15:08:59 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,8 @@ void	free_all(t_data *data)
 	}
 	if (data->addr)
 		free(data->addr);
-	if (data->image_mini)
-		mlx_destroy_image(data->mlx_ptr, data->image_mini);
 	if (data->window)
 		mlx_destroy_image(data->mlx_ptr, data->window);
-	i = -1;
-	while (++i <= HEIGHT && data->buff[i])
-		free(data->buff[i]);
-	if (data->buff)
-		free(data->buff);
 	if (data->win_ptr)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);

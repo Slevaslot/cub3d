@@ -13,33 +13,24 @@ SRCS 	= main.c \
 		  check_rgb.c \
 		  raytracing_utils.c\
 
-OBJS 	= $(addprefix obj/,${SRCS:.c=.o} ${SRCS_LIBFT:.c=.o})
+OBJS 	= ${SRCS:.c=.o} ${SRCS_LIBFT:.c=.o}
 LIBS = minilibx-linux/libmlx_Linux.a libft_gnl/libft_gnl.a -lXext -lX11 -lm
-
 CFLAGS 	= -Wall -Wextra -Werror
 FOLDER_NAME = obj
 CC 		= gcc
 
-obj/%.o: %.c
-	gcc ${CFLAGS} -g3 -c $< -o $@
-
 all: 		${PROG}
 
-${PROG}: create_folder ${OBJS}
-					@make -C minilibx-linux/
-					@make -C libft_gnl/
-					@$(CC) ${OBJS} ${LIBS} -o ${PROG}
-					@echo "cub3d Compiled!\n"
+%.o: %.c
+	$(CC) ${CFLAGS} -g3 -c $< -o $@
 
+${PROG}: 	${OBJS}
+					make -C minilibx-linux/
+					make -C libft_gnl/
+					$(CC) ${OBJS} ${LIBS} -o ${PROG}
 
-bonus:		${PROG_B}
-
-create_folder:
-	mkdir -p $(FOLDER_NAME)
-
-${PROG_B}:	${OBJS_B}
-
-					@echo "\cub3d Bonus Compiled! \n"
+# create_folder:
+# 	mkdir -p $(FOLDER_NAME)
 
 clean:
 

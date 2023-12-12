@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 18:47:37 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/08 19:10:48 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/12 16:22:46 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ int	get_ceiling_color(t_data *data, int i, int j)
 		}
 	}
 	if (!check_rgb_early(data->txtr[5], data, 1))
-		return (1);
+		return (free(data->txtr[5]), 1);
 	return (0);
 }

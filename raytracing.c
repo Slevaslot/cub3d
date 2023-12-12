@@ -3,60 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raytracing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:32:10 by aproust           #+#    #+#             */
-/*   Updated: 2023/12/11 14:24:40 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:09:22 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	get_color_minimap(t_data *d, double x, double y)
-{
-	int	color;
-
-	if ((int)x == (int)d->posx && (int)y == (int)d->posy)
-		color = 0xFF0000;
-	else if (d->map[(int)x][(int)y] == '0'
-		|| d->map[(int)x][(int)y] == 'N'
-		|| d->map[(int)x][(int)y] == 'S'
-		|| d->map[(int)x][(int)y] == 'E'
-		|| d->map[(int)x][(int)y] == 'W')
-		color = d->cf;
-	else if (d->map[(int)x][(int)y] == '1')
-		color = 0x606060;
-	else
-		color = 0x000000;
-	return (color);
-}
-
-void	draw_minimap(t_data *d)
-{
-	float	x;
-	float	y;
-	int		color;
-	int		pixel_index;
-
-	x = 0;
-	d->addrformini = mlx_get_data_addr(d->image_mini, &d->pixel_bits[5],
-			&d->line_bytes[5], &d->edian[5]);
-	while (d->map[(int)x] != NULL)
-	{
-		y = 0;
-		while (d->map[(int)x][(int)y] != '\0')
-		{
-			pixel_index = (int)((x * d->line_bytes[5]
-						/ (d->pixel_bits[5] / 8) * 10) + (y * 10));
-			color = get_color_minimap(d, x, y);
-			*(unsigned int *)(d->addrformini + pixel_index
-					* (d->pixel_bits[5] / 8)) = color;
-			y += 0.1;
-		}
-		x += 0.1;
-	}
-	mlx_put_image_to_window(d->mlx_ptr, d->win_ptr, d->image_mini, 0, 0);
-}
 
 void	raytracing(t_data *data, int x)
 {

@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 19:03:42 by aproust           #+#    #+#             */
-/*   Updated: 2023/12/08 19:08:35 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/12 15:51:17 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <stdlib.h>
 # include <math.h>
 
-# define WIDTH 1680
-# define HEIGHT 680
+# define WIDTH 2560
+# define HEIGHT 1486
 
 typedef struct t_data
 {
@@ -49,8 +49,6 @@ typedef struct t_data
 	double	planey;
 	char	player_dir;
 	int		**addr;
-	void	*image_mini;
-	char	*addrformini;
 	void	*window;
 	char	*win_addr;
 	int		drawstart;
@@ -68,6 +66,7 @@ typedef struct t_data
 	double	oldplanex;
 	int		rgbi;
 	char	*check_rgb_number;
+	int		counter_parsing;
 	int		rgbj;
 	int		*check_rgb_nb;
 	int		counter;
@@ -106,20 +105,17 @@ int		check_map(t_data *data, char **file);
 void	browse_image(t_data *data);
 void	get_texture(t_data *data);
 int		check_texture(t_data *data);
-void	draw_minimap(t_data *data);
 void	est_west_dir(t_data *data);
 void	found_player_dir(t_data *data);
 int		parse_file(t_data *data);
 int		parse_map(char *str);
 int		get_floor_color(t_data *data, int i, int j);
-int		get_ceiling_color(t_data *data, int i, int j);
 char	*cj(char *str, char c, int param);
 int		check_rgb_fc(char *color, t_data *data, int param);
 int		check_rgb_early(char *color, t_data *data, int param);
 int		check_rgb_end(t_data *data, int param);
 int		find_longest_line(char **map);
 int		init_raytracing(t_data *data);
-void	draw_minimap(t_data *data);
 void	draw_value_init(t_data *data);
 void	find_wall(t_data *d);
 void	put_ceiling_in_window(t_data *data, int x, int y);

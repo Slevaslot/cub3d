@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_rgb.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 17:50:28 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/08 18:47:47 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/12/12 16:54:47 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,18 @@
 
 int	check_rgb_end(t_data *data, int param)
 {
+	if (data->check_rgb_number[0] < '0' || data->check_rgb_number[0] > '9')
+		return (free(data->check_rgb_number), free(data->check_rgb_nb), 0);
 	data->check_rgb_nb[++data->rgbj] = ft_atoi(data->check_rgb_number);
-	free(data->check_rgb_number);
+	if (data->check_rgb_nb[data->rgbj] > 255)
+		return (free(data->check_rgb_number), 0);
 	if (data->rgbj != 2)
-		return (free(data->check_rgb_nb), 0);
+		return (free(data->check_rgb_nb), free(data->check_rgb_number), 0);
 	if (param == 0)
 		data->f_color = data->check_rgb_nb;
 	else if (param == 1)
 		data->c_color = data->check_rgb_nb;
-	return (1);
+	return (free(data->check_rgb_number), 1);
 }
 
 int	check_rgb_fc(char *color, t_data *d, int param)
@@ -64,5 +67,5 @@ int	check_rgb_early(char *color, t_data *data, int param)
 	data->check_rgb_number = 0;
 	if (color[0] < '0' || color[0] > '9')
 		return (free(data->check_rgb_nb), 0);
-	return (check_rgb_fc(color, data, param));
+	return (free(data->check_rgb_number), check_rgb_fc(color, data, param));
 }

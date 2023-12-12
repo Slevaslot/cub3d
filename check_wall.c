@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_wall.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:19:01 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/08 16:19:03 by slevaslo         ###   ########.fr       */
+/*   Updated: 2023/12/12 16:24:00 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	get_floor_and_ceiling(t_data *data, int i, int j)
 	if (data->file[i][y] == 'F')
 	{
 		if (get_floor_color(data, i, j))
-			return (1);
+			return (free(data->txtr[5]), 1);
 	}
 	else if (data->file[i][y] == 'C')
 	{

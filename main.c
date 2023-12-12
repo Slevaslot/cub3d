@@ -6,7 +6,7 @@
 /*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/11 18:25:24 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/12 16:37:17 by aproust          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,15 @@
 
 int	start_program(char *map_name, t_data *data)
 {
-	int	i;
-
-	i = -1;
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		return (printf("Error no environment\n"), free(data->txtr), -1);
-	data->buff = (int **)ft_calloc(sizeof(int *), (HEIGHT + 1));
-	while (++i < HEIGHT + 1)
-		data->buff[i] = (int *)ft_calloc(sizeof(int), (WIDTH + 1));
 	map_init(data, map_name);
 	found_player_dir(data);
 	if (check_texture(data))
 		return (printf("Error: texture file does not exist\n"),
 			free_all(data), 1);
 	data->win_ptr = mlx_new_window(data->mlx_ptr, WIDTH, HEIGHT, "Cub3d");
-	data->image_mini = mlx_new_image(data->mlx_ptr, 100, 100);
 	data->window = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
 	data->win_addr = mlx_get_data_addr(data->window, &data->pixel_bits[0],
 			&data->line_bytes[0], &data->edian[0]);
@@ -70,7 +63,6 @@ int	main(int ac, char **av)
 		data.addr = 0;
 		data.img = 0;
 		data.window = 0;
-		data.image_mini = 0;
 		data.win_ptr = 0;
 		data.txtr = ft_calloc(sizeof(char *), 7);
 		if (!data.txtr)
