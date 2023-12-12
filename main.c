@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aproust <aproust@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slevaslo <slevaslo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:35:44 by slevaslo          #+#    #+#             */
-/*   Updated: 2023/12/12 16:37:17 by aproust          ###   ########.fr       */
+/*   Updated: 2023/12/12 19:02:10 by slevaslo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,15 @@ int	start_program(char *map_name, t_data *data)
 	data->window = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
 	data->win_addr = mlx_get_data_addr(data->window, &data->pixel_bits[0],
 			&data->line_bytes[0], &data->edian[0]);
-	get_texture(data);
+	if (get_texture(data))
+	{
+		free_all(data);
+		return (printf("Error: texture file does not exist\n"), -1);
+	}
+	check_texture_value(data);
 	mlx_hook(data->win_ptr, 17, 0, close_window, data);
 	mlx_hook(data->win_ptr, 2, 1L << 0, key, data);
-	mlx_loop_hook(data->mlx_ptr, init_raytracing, data);
+	mlx_loop_hook(data->mlx_ptr, init_raycasting, data);
 	mlx_loop(data->mlx_ptr);
 	return (1);
 }

@@ -5,13 +5,13 @@ SRCS 	= main.c \
 		  map_init.c \
 		  parsing.c \
 		  parsing_sequel.c \
-		  raytracing.c\
+		  raycasting.c\
 		  texture.c \
 		  found_direction.c \
 		  check_wall.c \
 		  floor_and_ceiling.c \
 		  check_rgb.c \
-		  raytracing_utils.c\
+		  raycasting_utils.c\
 
 OBJS 	= ${SRCS:.c=.o} ${SRCS_LIBFT:.c=.o}
 LIBS = minilibx-linux/libmlx_Linux.a libft_gnl/libft_gnl.a -lXext -lX11 -lm
